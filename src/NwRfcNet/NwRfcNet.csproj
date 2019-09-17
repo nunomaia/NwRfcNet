@@ -6,11 +6,13 @@
     <RootNamespace>NwRfcNet</RootNamespace>
     <Version>0.0.1</Version>
     <Authors>Nuno Maia</Authors>
-    <Description>An easy way of making SAP RFC calls from .NET</Description>
+    <Description>An easy way of making SAP RFC calls from .NET (Windows, Linux and macOS )</Description>
     <PackageTags>sap rfc bapi</PackageTags>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>../../assets/NwRfcNet.snk</AssemblyOriginatorKeyFile>
     <DelaySign>false</DelaySign>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/nunomaia/NwRfcNet/</PackageProjectUrl>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
