@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <AssemblyName>NwRfcNet.Sample</AssemblyName>
+    <RootNamespace>NwRfcNet.Sample</RootNamespace>
+    <Authors>Nuno Maia</Authors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommandLineParser" Version="2.6.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NwRfcNet\NwRfcNet.csproj" />
+  </ItemGroup>
+
+</Project>
