@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace NwRfcNet.Sample
+﻿namespace Sample.BapiCustomerList
 {
     public class ListCustomersInputParameters
     {

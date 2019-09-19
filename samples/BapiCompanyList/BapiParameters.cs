@@ -1,4 +1,4 @@
-﻿namespace NwRfcNet.Sample
+﻿namespace Sample.BapiCompanyList
 {
     public class BapiCompanyOutputParameters
     {

@@ -6,7 +6,7 @@ namespace NwRfcNet.Util
     /// <summary>
     /// Dictionary Extensions 
     /// </summary>
-    internal static class DictionaryExtensions
+    internal static class CollectionExtensions
     {
         /// <summary>
         /// if dictonary don't contains an element with the specified key, obtain value from funcValue
@@ -28,6 +28,20 @@ namespace NwRfcNet.Util
             }
 
             return dict[key];
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="arr"></param>
+        /// <param name="value"></param>
+        internal static void FillAll<T>(this T[] arr, T value)
+        {
+            for (int i = 0; i < arr.Length; i++)
+            {
+                arr[i] = value;
+            }
         }
     }
 }

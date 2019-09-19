@@ -89,3 +89,11 @@ Output should be
 | ------------- | -------------|
 | C001          | company 1    |
 | C002          | Company 2    |
+
+## Samples
+
+Included samples in project
+
+* List FI Comapnies
+* List FI Customers
+* Get Details of a FI Customer

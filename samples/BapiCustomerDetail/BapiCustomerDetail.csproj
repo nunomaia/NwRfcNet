@@ -3,9 +3,8 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.2</TargetFramework>
-    <AssemblyName>NwRfcNet.Sample</AssemblyName>
-    <RootNamespace>NwRfcNet.Sample</RootNamespace>
-    <Authors>Nuno Maia</Authors>
+    <AssemblyName>Sample.BapiCustomerDetail</AssemblyName>
+    <RootNamespace>Sample.BapiCustomerDetail</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NwRfcNet\NwRfcNet.csproj" />
+    <ProjectReference Include="..\..\src\NwRfcNet\NwRfcNet.csproj" />
   </ItemGroup>
 
 </Project>

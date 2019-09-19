@@ -339,3 +339,6 @@ ASALocalRun/
 # BeatPulse healthcheck temp database
 healthchecksdb
 /src/NwRfcNet.Sample/Properties/launchSettings.json
+/samples/BapiCompanyList/Properties/launchSettings.json
+/samples/BapiCustomerDetail/Properties/launchSettings.json
+/samples/BapiCustomerList/Properties/launchSettings.json

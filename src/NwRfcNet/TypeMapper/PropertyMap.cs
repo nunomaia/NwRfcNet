@@ -33,5 +33,6 @@ namespace NwRfcNet.TypeMapper
         /// This is only required for some RFC Field Types
         /// </summary>
         public int Length { get; internal set; }
+
     }
 }

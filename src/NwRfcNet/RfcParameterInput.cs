@@ -3,6 +3,7 @@ using NwRfcNet.TypeMapper;
 using System;
 using System.Reflection;
 using System.Collections;
+using NwRfcNet.RfcTypes;
 
 namespace NwRfcNet
 {
@@ -46,6 +47,17 @@ namespace NwRfcNet
                         var structHandle = GetStructure(handler, propMap.Value);
                         SetParameters(structHandle, propValue);
                         break;
+
+                    case RfcFieldType.Date:
+                        var date = new RfcDate((DateTime)((object)propMap.Value));
+                        date.SetDate(handler, propMap.Value.RfcParameterName);
+                        break;
+
+                    case RfcFieldType.Time:
+                        var time = new RfcTime((TimeSpan)((object)propMap.Value));
+                        time.SetTime(handler, propMap.Value.RfcParameterName);
+                        break;
+
 
                     default:
                         throw new RfcException("Rfc Type not handled");

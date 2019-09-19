@@ -1,4 +1,5 @@
 ﻿using NwRfcNet.Interop;
+using NwRfcNet.RfcTypes;
 using NwRfcNet.TypeMapper;
 using System;
 using System.Reflection;
@@ -53,6 +54,15 @@ namespace NwRfcNet
                         var structHandle = GetStructure(handler, map);
                         objectValue = GetReturnParameters(structHandle, map.PropertyType);
                         break;
+
+                    case RfcFieldType.Date:
+                        objectValue = RfcDate.GetDate(handler, map.RfcParameterName)?.Date;
+                        break;
+
+                    case RfcFieldType.Time:
+                        objectValue = RfcTime.GetTime(handler, map.RfcParameterName)?.Time;
+                        break;
+
 
                     default:
                         throw new RfcException("Rfc Type not handled");

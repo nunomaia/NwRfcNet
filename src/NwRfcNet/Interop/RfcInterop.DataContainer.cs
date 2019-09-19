@@ -53,6 +53,18 @@ namespace NwRfcNet.Interop
 
         [DllImport(NwRfcLib)]
         public static extern RFC_RC RfcDeleteAllRows(IntPtr tableHandle, out RFC_ERROR_INFO errorInfo);
-    
+
+        [DllImport(NwRfcLib, CharSet = CharSet.Unicode)]
+        public static extern RFC_RC RfcGetDate(IntPtr dataHandle, string name, char[] emptyDate, out RFC_ERROR_INFO errorInfo);
+
+        [DllImport(NwRfcLib, CharSet = CharSet.Unicode)]
+        public static extern RFC_RC RfcSetDate(IntPtr dataHandle, string name, char[] date, out RFC_ERROR_INFO errorInfo);
+
+        [DllImport(NwRfcLib, CharSet = CharSet.Unicode)]
+        public static extern RFC_RC RfcSetTime(IntPtr dataHandle, string name, char[] time, out RFC_ERROR_INFO errorInfo);
+
+        [DllImport(NwRfcLib, CharSet = CharSet.Unicode)]
+        public static extern RFC_RC RfcGetTime(IntPtr dataHandle, string name, char[] emptyTime, out RFC_ERROR_INFO errorInfo);
+
     }
 }

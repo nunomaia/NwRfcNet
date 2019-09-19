@@ -31,7 +31,7 @@ namespace NwRfcNet.TypeMapper
                     PropertyName = prop.Name,
                     RfcParameterName = prop.Name.ToUpper(),
                     ParameterType = null,
-                    PropertyType = prop.GetType()
+                    PropertyType = prop.PropertyType
                 }
             );            
         }
