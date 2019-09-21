@@ -33,7 +33,7 @@ namespace NwRfcNet.RfcTypes
         {
             if (string.IsNullOrEmpty(date) || date == NullRfcDateString || date == ZerolRfcDateString)
             {
-                Date = null;
+                RfcValue = null;
                 return;
             }
                 
@@ -44,14 +44,14 @@ namespace NwRfcNet.RfcTypes
             int month = Int32.Parse(date.Substring(YearFormat.Length, MonthFormat.Length));
             int day = Int32.Parse(date.Substring(YearFormat.Length + MonthFormat.Length, DayFormat.Length));
 
-            Date = new DateTime(year, month, day);
+            RfcValue = new DateTime(year, month, day);
         }
 
         /// <summary>
         /// Creates a new RfcDate with format YYYMMDD
         /// </summary>
         /// <param name="date">YYYYMMDD RFC Date</param>
-        public RfcDate(DateTime? date) => Date = date?.Date;
+        public RfcDate(DateTime? date) => RfcValue = date?.Date;
 
         #endregion  
 
@@ -60,7 +60,7 @@ namespace NwRfcNet.RfcTypes
         /// <summary>
         /// Date
         /// </summary>
-        public DateTime? Date { get;  }
+        public DateTime? RfcValue { get;  }
 
         #endregion
 
@@ -69,7 +69,7 @@ namespace NwRfcNet.RfcTypes
         /// </summary>
         /// <returns></returns>
         public override string ToString() 
-            => Date?.ToString("yyyyMMdd") ?? ZerolRfcDateString;
+            => RfcValue?.ToString("yyyyMMdd") ?? ZerolRfcDateString;
 
         public char[] ToBuffer() => ToString().ToCharArray();
 
@@ -81,9 +81,9 @@ namespace NwRfcNet.RfcTypes
         /// </summary>
         /// <param name="dataHandle">handle to container</param>
         /// <param name="name">field name</param>
-        internal void SetDate(IntPtr dataHandle, string name)
+        internal void SetFieldValue(IntPtr dataHandle, string name)
         {
-            if (Date != null)
+            if (RfcValue != null)
             {
                 var rc = RfcInterop.RfcSetDate(dataHandle, name, ToBuffer(), out var errorInfo);
                 rc.OnErrorThrowException(errorInfo);
@@ -96,7 +96,7 @@ namespace NwRfcNet.RfcTypes
         /// <param name="dataHandle">handle to container</param>
         /// <param name="name">field name</param>
         /// <returns></returns>
-        internal static RfcDate GetDate(IntPtr dataHandle, string name)
+        internal static RfcDate GetFieldValue(IntPtr dataHandle, string name)
         {
             var buffer = new char[RfcDateTemplate.Length]; //   = new StringBuilder(YearFormat.Length + MonthFormat.Length + DayFormat.Length);
             buffer.FillAll(' ');

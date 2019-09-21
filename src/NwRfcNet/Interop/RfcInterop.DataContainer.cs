@@ -43,7 +43,7 @@ namespace NwRfcNet.Interop
         public static extern IntPtr RfcGetCurrentRow(IntPtr tableHandle, out RFC_ERROR_INFO errorInfo);
 
         [DllImport(NwRfcLib, CharSet = CharSet.Unicode)]
-        public static extern RFC_RC RfcGetString(IntPtr dataHandle, string name, StringBuilder stringBuffer, uint bufferLength, uint stringLength, out RFC_ERROR_INFO errorInfo);
+        public static extern RFC_RC RfcGetString(IntPtr dataHandle, string name, char[] stringBuffer, uint bufferLength, out uint stringLength, out RFC_ERROR_INFO errorInfo);
 
         [DllImport(NwRfcLib, CharSet = CharSet.Unicode)]
         public static extern IntPtr RfcCreateTable(IntPtr typeDescHandle, out RFC_ERROR_INFO errorInfo);
@@ -65,6 +65,18 @@ namespace NwRfcNet.Interop
 
         [DllImport(NwRfcLib, CharSet = CharSet.Unicode)]
         public static extern RFC_RC RfcGetTime(IntPtr dataHandle, string name, char[] emptyTime, out RFC_ERROR_INFO errorInfo);
+
+        [DllImport(NwRfcLib, CharSet = CharSet.Unicode)]
+        public static extern RFC_RC RfcGetInt8(IntPtr dataHandle, string name, ref long value, out RFC_ERROR_INFO errorInfo);
+
+        [DllImport(NwRfcLib, CharSet = CharSet.Unicode)]
+        public static extern RFC_RC RfcSetInt8(IntPtr dataHandle, string name, long value, out RFC_ERROR_INFO errorInfo);
+
+        [DllImport(NwRfcLib, CharSet = CharSet.Unicode)]
+        public static extern RFC_RC RfcSetString(IntPtr dataHandle, string name, string value, uint valueLength, out RFC_ERROR_INFO errorInfo);
+
+        [DllImport(NwRfcLib, CharSet = CharSet.Unicode)]
+        public static extern RFC_RC RfcGetString(IntPtr dataHandle, string name, ref char[] stringBuffer, uint valueLength, out uint stringLength, out RFC_ERROR_INFO errorInfo);
 
     }
 }

@@ -97,3 +97,4 @@ Included samples in project
 * List FI Comapnies
 * List FI Customers
 * Get Details of a FI Customer
+* FI General Ledger Account

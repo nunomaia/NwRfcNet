@@ -50,14 +50,23 @@ namespace NwRfcNet
 
                     case RfcFieldType.Date:
                         var date = new RfcDate((DateTime)((object)propMap.Value));
-                        date.SetDate(handler, propMap.Value.RfcParameterName);
+                        date.SetFieldValue(handler, propMap.Value.RfcParameterName);
                         break;
 
                     case RfcFieldType.Time:
                         var time = new RfcTime((TimeSpan)((object)propMap.Value));
-                        time.SetTime(handler, propMap.Value.RfcParameterName);
+                        time.SetFieldValue(handler, propMap.Value.RfcParameterName);
                         break;
 
+                    case RfcFieldType.Int8:
+                        var int8 = new RfcInt8((long)((object)propMap.Value));
+                        int8.SetFieldValue(handler, propMap.Value.RfcParameterName);
+                        break;
+
+                    case RfcFieldType.Bcd:
+                        var bcd = new RfcBcd((decimal)((object)propMap.Value));
+                        bcd.SetFieldValue(handler, propMap.Value.RfcParameterName);
+                        break;
 
                     default:
                         throw new RfcException("Rfc Type not handled");

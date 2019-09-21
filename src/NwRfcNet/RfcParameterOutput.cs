@@ -56,13 +56,20 @@ namespace NwRfcNet
                         break;
 
                     case RfcFieldType.Date:
-                        objectValue = RfcDate.GetDate(handler, map.RfcParameterName)?.Date;
+                        objectValue = RfcDate.GetFieldValue(handler, map.RfcParameterName)?.RfcValue;
                         break;
 
                     case RfcFieldType.Time:
-                        objectValue = RfcTime.GetTime(handler, map.RfcParameterName)?.Time;
+                        objectValue = RfcTime.GetFieldValue(handler, map.RfcParameterName)?.RfcValue;
                         break;
 
+                    case RfcFieldType.Int8:
+                        objectValue = RfcInt8.GetFieldValue(handler, map.RfcParameterName).RfcValue;
+                        break;
+
+                    case RfcFieldType.Bcd:
+                        objectValue = RfcBcd.GetFieldValue(handler, map.RfcParameterName).RfcValue;
+                        break;
 
                     default:
                         throw new RfcException("Rfc Type not handled");

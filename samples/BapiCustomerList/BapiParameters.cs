@@ -1,4 +1,6 @@
-﻿namespace Sample.BapiCustomerList
+﻿using NwRfcNet.Bapi;
+
+namespace Sample.BapiCustomerList
 {
     public class ListCustomersInputParameters
     {
@@ -19,20 +21,6 @@
     {
         public string CustomerId { get; set; }
         public string Name { get; set; }
-    }
-
-    public class BapiReturn
-    {
-        public string Type { get; set; }
-        public string Id { get; set; }
-        public string Number { get; set; }
-        public string Message { get; set; }
-        public string LogNumber { get; set; }
-        public string LogMsgNumber { get; set; }
-        public string Message1 { get; set; }
-        public string Message2 { get; set; }
-        public string Message3 { get; set; }
-        public string Message4 { get; set; }
     }
 
 

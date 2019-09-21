@@ -30,7 +30,7 @@ namespace NwRfcNet.RfcTypes
         {
             if (string.IsNullOrEmpty(time) || time == NullRfcTimeString || time == ZeroRfcTimeString)
             {
-                Time = null;
+                RfcValue = null;
                 return;
             }
 
@@ -41,21 +41,21 @@ namespace NwRfcNet.RfcTypes
             int minutes = Int32.Parse(time.Substring(HoursFormat.Length, MinutesFormat.Length));
             int seconds = Int32.Parse(time.Substring(HoursFormat.Length + MinutesFormat.Length, SecondsFormat.Length));
 
-            Time = new TimeSpan(hours, minutes, seconds);
+            RfcValue = new TimeSpan(hours, minutes, seconds);
         }
 
         /// <summary>
         /// Creates a new RfcDate with format YYYMMDD
         /// </summary>
         /// <param name="date">YYYYMMDD RFC Date</param>
-        public RfcTime(TimeSpan? time) => Time = time;
+        public RfcTime(TimeSpan? time) => RfcValue = time;
 
         #region Properties
 
         /// <summary>
         /// Time
         /// </summary>
-        public TimeSpan? Time { get; }
+        public TimeSpan? RfcValue { get; }
 
         #endregion
 
@@ -64,7 +64,7 @@ namespace NwRfcNet.RfcTypes
         /// </summary>
         /// <returns></returns>
         public override string ToString()
-            => Time?.ToString("hhmmss") ?? ZeroRfcTimeString;
+            => RfcValue?.ToString("hhmmss") ?? ZeroRfcTimeString;
 
         public char[] ToBuffer() => ToString().ToCharArray();
 
@@ -75,9 +75,9 @@ namespace NwRfcNet.RfcTypes
         /// </summary>
         /// <param name="dataHandle">handle to container</param>
         /// <param name="name">field name</param>
-        internal void SetTime(IntPtr dataHandle, string name)
+        internal void SetFieldValue(IntPtr dataHandle, string name)
         {
-            if (Time != null)
+            if (RfcValue != null)
             {
                 var rc = RfcInterop.RfcSetTime(dataHandle, name, ToBuffer(), out var errorInfo);
                 rc.OnErrorThrowException(errorInfo);
@@ -90,7 +90,7 @@ namespace NwRfcNet.RfcTypes
         /// <param name="dataHandle">handle to container</param>
         /// <param name="name">field name</param>
         /// <returns></returns>
-        internal static RfcTime GetTime(IntPtr dataHandle, string name)
+        internal static RfcTime GetFieldValue(IntPtr dataHandle, string name)
         {
             var buffer = new char[RfcTimeTemplate.Length]; //   = new StringBuilder(YearFormat.Length + MonthFormat.Length + DayFormat.Length);
             buffer.FillAll(' ');
