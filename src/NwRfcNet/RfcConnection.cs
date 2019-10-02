@@ -38,7 +38,12 @@ namespace NwRfcNet
             string client = null,
             string language = null,
             string systemNumber = null,
-            string sapRouter = null)
+            string sapRouter = null,
+            string sncQop = null,
+            string sncMyname = null,
+            string sncPartnername = null,
+            string sncLib = null
+            )
         {
             UserName = userName;
             Password = password;
@@ -47,6 +52,10 @@ namespace NwRfcNet
             Language = language;
             SystemNumber = systemNumber;
             SapRouter = sapRouter;
+            SncQop = sncQop;
+            SncMyname = sncMyname;
+            SncPartnername = sncPartnername;
+            SncLib = sncLib;
         }
 
         #endregion
@@ -135,6 +144,46 @@ namespace NwRfcNet
             {
                 CheckConnectionIsClosed();
                 _parms.Trace = value;
+            }
+        }
+
+        public string SncQop
+        {
+            get => _parms.SncQop;
+            set
+            {
+                CheckConnectionIsClosed();
+                _parms.SncQop = value;
+            }
+        }
+
+        public string SncMyname
+        {
+            get => _parms.SncMyname;
+            set
+            {
+                CheckConnectionIsClosed();
+                _parms.SncMyname = value;
+            }
+        }
+
+        public string SncPartnername
+        {
+            get => _parms.SncPartnername;
+            set
+            {
+                CheckConnectionIsClosed();
+                _parms.SncPartnername = value;
+            }
+        }
+
+        public string SncLib
+        {
+            get => _parms.SncLib;
+            set
+            {
+                CheckConnectionIsClosed();
+                _parms.SncLib = value;
             }
         }
 

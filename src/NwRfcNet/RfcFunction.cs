@@ -1,4 +1,5 @@
 ﻿using NwRfcNet.Interop;
+using NwRfcNet.TypeMapper;
 using System;
 
 namespace NwRfcNet
@@ -33,6 +34,11 @@ namespace NwRfcNet
         #region Properties
 
         public string FunctionName { get; }
+
+        /// <summary>
+        /// If required, define a function level RfcMapper
+        /// </summary>
+        public RfcMapper Mapper { get; set; }
 
         #endregion
 
@@ -89,7 +95,7 @@ namespace NwRfcNet
 
             if (input != null)
             {
-                var inParam = new RfcParameterInput(_rfcConnection.Mapper);
+                var inParam = new RfcParameterInput(Mapper ?? _rfcConnection.Mapper);
                 inParam.SetParameters(FunctionHandle, input);
             }
 

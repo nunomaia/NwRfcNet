@@ -98,3 +98,29 @@ Included samples in project
 * List FI Customers
 * Get Details of a FI Customer
 * FI General Ledger Account
+
+## Single sign-on (SSO)
+
+Alternatively it's possible to sign-on with SSO instead of user and password. 
+
+Example :  Opening a RFC connection using NTLM.  
+ 
+```C#
+    var conn = new RfcConnection(
+        hostname: "server_name", 
+        client: "000", 
+        sncPartnername: @"p:DOMAIN\SRVACC",
+        sncLib: @"gx64ntlm.dll" )
+``` 
+
+Define the SNC parameters related to your environment. If SncLib is not defined, NetWeaver RFC Library uses library defined in environment variable SNC_LIB or SNC_LIB_64.
+
+```C#
+        public string SncQop { get ; set; }
+
+        public string SncMyname { get; set; }
+
+        public string SncPartnername { get; set; }
+
+        public string SncLib { get; set; }
+``` 

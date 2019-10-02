@@ -44,6 +44,19 @@ namespace NwRfcNet
         [RfcConnectionPropertyAttribute("trace")]
         public string Trace { get ; set; }
 
+        [RfcConnectionPropertyAttribute("snc_qop")]
+        public string SncQop { get ; set; }
+
+        [RfcConnectionPropertyAttribute("snc_myname")]
+        public string SncMyname { get; set; }
+
+        [RfcConnectionPropertyAttribute("snc_partnername")]
+        public string SncPartnername { get; set; }
+
+        [RfcConnectionPropertyAttribute("snc_lib")]
+        public string SncLib { get; set; }
+
+
         #endregion  
 
         /// <summary>
