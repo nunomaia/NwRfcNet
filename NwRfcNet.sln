@@ -19,7 +19,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BapiCustomerList", "samples
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BapiCustomerDetail", "samples\BapiCustomerDetail\BapiCustomerDetail.csproj", "{D506F2A9-D77B-490B-872B-680729E5529E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BapiGetGlAccountBalance", "samples\BapiGetGlAccountBalance\BapiGetGlAccountBalance.csproj", "{F4C2ADD5-BA4C-45C2-AEF6-3340A5CDF0C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BapiGetGlAccountBalance", "samples\BapiGetGlAccountBalance\BapiGetGlAccountBalance.csproj", "{F4C2ADD5-BA4C-45C2-AEF6-3340A5CDF0C2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RfcReadTable", "samples\RfcReadTable\RfcReadTable.csproj", "{19EA3504-609D-4D91-801D-947ED3E33975}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -103,6 +105,18 @@ Global
 		{F4C2ADD5-BA4C-45C2-AEF6-3340A5CDF0C2}.Release|x64.Build.0 = Release|Any CPU
 		{F4C2ADD5-BA4C-45C2-AEF6-3340A5CDF0C2}.Release|x86.ActiveCfg = Release|Any CPU
 		{F4C2ADD5-BA4C-45C2-AEF6-3340A5CDF0C2}.Release|x86.Build.0 = Release|Any CPU
+		{19EA3504-609D-4D91-801D-947ED3E33975}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19EA3504-609D-4D91-801D-947ED3E33975}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19EA3504-609D-4D91-801D-947ED3E33975}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{19EA3504-609D-4D91-801D-947ED3E33975}.Debug|x64.Build.0 = Debug|Any CPU
+		{19EA3504-609D-4D91-801D-947ED3E33975}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{19EA3504-609D-4D91-801D-947ED3E33975}.Debug|x86.Build.0 = Debug|Any CPU
+		{19EA3504-609D-4D91-801D-947ED3E33975}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19EA3504-609D-4D91-801D-947ED3E33975}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19EA3504-609D-4D91-801D-947ED3E33975}.Release|x64.ActiveCfg = Release|Any CPU
+		{19EA3504-609D-4D91-801D-947ED3E33975}.Release|x64.Build.0 = Release|Any CPU
+		{19EA3504-609D-4D91-801D-947ED3E33975}.Release|x86.ActiveCfg = Release|Any CPU
+		{19EA3504-609D-4D91-801D-947ED3E33975}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -114,6 +128,7 @@ Global
 		{973E85D8-8F8B-45F1-B062-B110595371C7} = {813ACAE4-6905-4DE0-BD6B-AADF0535B2B5}
 		{D506F2A9-D77B-490B-872B-680729E5529E} = {813ACAE4-6905-4DE0-BD6B-AADF0535B2B5}
 		{F4C2ADD5-BA4C-45C2-AEF6-3340A5CDF0C2} = {813ACAE4-6905-4DE0-BD6B-AADF0535B2B5}
+		{19EA3504-609D-4D91-801D-947ED3E33975} = {813ACAE4-6905-4DE0-BD6B-AADF0535B2B5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3BA7E01A-BE1C-404B-838B-0766A1657F8B}

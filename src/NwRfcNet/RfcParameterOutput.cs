@@ -39,7 +39,7 @@ namespace NwRfcNet
                 switch (map.ParameterType)
                 {
                     case RfcFieldType.Char:
-                        objectValue = GetChars(handler, map);
+                        objectValue = RfcChar.GetFieldValue(handler, map.RfcParameterName, map.Length)?.RfcValue;
                         break;
 
                     case RfcFieldType.Int:
@@ -82,20 +82,6 @@ namespace NwRfcNet
             return returnValue;
         }
 
-        /// <summary>
-        /// Returns the value of the specified field.
-        //  Remaining places in the buffer will be filled with trailing spaces.
-        /// </summary>
-        /// <param name="handler"></param>
-        /// <param name="map"></param>
-        /// <returns></returns>
-        private static string GetChars(IntPtr handler, PropertyMap map)
-        {
-            var buffer = new StringBuilder(map.Length);
-            var rc = RfcInterop.RfcGetChars(handler, map.RfcParameterName, buffer, (uint)map.Length, out var errorInfo);
-            rc.OnErrorThrowException(errorInfo);
-            return buffer.ToString(0, map.Length);
-        }
 
         /// <summary>
         ///  Returns the value of the specified field. as INT32
@@ -109,8 +95,6 @@ namespace NwRfcNet
             rc.OnErrorThrowException(errorInfo);
             return intValue;
         }
-
-
 
         /// <summary>
         /// Returns the value of the specified field as a pointer to a RFCTYPE_TABLE

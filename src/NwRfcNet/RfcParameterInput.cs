@@ -4,6 +4,7 @@ using System;
 using System.Reflection;
 using System.Collections;
 using NwRfcNet.RfcTypes;
+using System.Text;
 
 namespace NwRfcNet
 {
@@ -79,7 +80,12 @@ namespace NwRfcNet
             if (charValue == null)
                 return;
 
-            var rc = RfcInterop.RfcSetChars(dataHandle, map.RfcParameterName, charValue, (uint) map.Length, out var errorInfo);
+            char[] buffer = new char[map.Length];
+            charValue.CopyTo(0, buffer, 0, charValue.Length);
+            for (int i = charValue.Length; i < buffer.Length; i++)
+                buffer[i] =  ' ';
+
+            var rc = RfcInterop.RfcSetChars(dataHandle, map.RfcParameterName, buffer, (uint) map.Length, out var errorInfo);
             rc.OnErrorThrowException(errorInfo);
         }
         private static void SetInt(IntPtr dataHandle, PropertyMap map, int intValue)

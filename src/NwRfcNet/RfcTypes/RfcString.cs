@@ -37,7 +37,7 @@ namespace NwRfcNet.RfcTypes
             char[] buffer = new char[1024];
             var rc = RfcInterop.RfcGetString(dataHandle, name, buffer, (uint)buffer.Length, out var bufferLength, out var errorInfo);
 
-            if (rc == RfcInterop.RFC_RC.RFC_AUTHORIZATION_FAILURE)
+            if (rc == RfcInterop.RFC_RC.RFC_BUFFER_TOO_SMALL)
             {
                 buffer = new char[bufferLength];
                 rc = RfcInterop.RfcGetString(dataHandle, name, buffer, (uint)buffer.Length, out bufferLength, out errorInfo);

@@ -98,6 +98,7 @@ Included samples in project
 * List FI Customers
 * Get Details of a FI Customer
 * FI General Ledger Account
+* RFC Read Table
 
 ## Single sign-on (SSO)
 

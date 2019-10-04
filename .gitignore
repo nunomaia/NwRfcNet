@@ -343,3 +343,4 @@ healthchecksdb
 /samples/BapiCustomerDetail/Properties/launchSettings.json
 /samples/BapiCustomerList/Properties/launchSettings.json
 /samples/BapiGetGlAccountBalance/Properties/launchSettings.json
+samples/RfcReadTable/Properties/launchSettings.json

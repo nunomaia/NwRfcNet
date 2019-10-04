@@ -19,10 +19,10 @@ namespace NwRfcNet.Interop
         public static extern RFC_RC RfcSetInt(IntPtr dataHandle, string name, int value, out RFC_ERROR_INFO errorInfo);
 
         [DllImport(NwRfcLib, CharSet = CharSet.Unicode)]
-        public static extern RFC_RC RfcGetChars(IntPtr dataHandle, string name, StringBuilder charBuffer, uint bufferLength, out RFC_ERROR_INFO errorInfo);
+        public static extern RFC_RC RfcGetChars(IntPtr dataHandle, string name, char[] charBuffer, uint bufferLength, out RFC_ERROR_INFO errorInfo);
 
         [DllImport(NwRfcLib, CharSet = CharSet.Unicode)]
-        public static extern RFC_RC RfcSetChars(IntPtr dataHandle, string name, string charValue, uint valueLength, out RFC_ERROR_INFO errorInfo);
+        public static extern RFC_RC RfcSetChars(IntPtr dataHandle, string name, char[] charValue, uint valueLength, out RFC_ERROR_INFO errorInfo);
 
         [DllImport(NwRfcLib, CharSet = CharSet.Unicode)]
         public static extern RFC_RC RfcGetStructure(IntPtr dataHandle, string name, out IntPtr structHandle, out RFC_ERROR_INFO errorInfo);
