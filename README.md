@@ -1,4 +1,4 @@
-# .NET client library for SAP NetWeawer RFC
+# .NET client library for SAP NetWeaver RFC
 An easy way of making SAP RFC calls from .NET. Libray is supported in Windows, Linux and macOS.
 
 ## Supported Platforms & Prerequisites
