@@ -82,7 +82,6 @@ namespace NwRfcNet
             return returnValue;
         }
 
-
         /// <summary>
         ///  Returns the value of the specified field. as INT32
         /// </summary>

@@ -69,6 +69,10 @@ namespace NwRfcNet
                         bcd.SetFieldValue(handler, propMap.Value.RfcParameterName);
                         break;
 
+                    case RfcFieldType.String:
+                        SetString(handler, propMap.Value, (string)propValue);
+                        break;
+
                     default:
                         throw new RfcException("Rfc Type not handled");
                 }
@@ -88,6 +92,13 @@ namespace NwRfcNet
             var rc = RfcInterop.RfcSetChars(dataHandle, map.RfcParameterName, buffer, (uint) map.Length, out var errorInfo);
             rc.OnErrorThrowException(errorInfo);
         }
+
+        private static void SetString(IntPtr dataHandle, PropertyMap map, string stringValue)
+        {
+            var rc = RfcInterop.RfcSetString(dataHandle, map.RfcParameterName, stringValue, (uint)stringValue.Length, out var errorInfo);
+            rc.OnErrorThrowException(errorInfo);
+        }
+
         private static void SetInt(IntPtr dataHandle, PropertyMap map, int intValue)
         {
             var rc = RfcInterop.RfcSetInt(dataHandle, map.RfcParameterName, intValue, out var errorInfo);
