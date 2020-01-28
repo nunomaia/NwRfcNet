@@ -4,7 +4,7 @@
     {
         public static readonly string Success = "S";
 
-        public static readonly string Error = "S";
+        public static readonly string Error = "E";
 
         public static readonly string Warning = "W";
 
