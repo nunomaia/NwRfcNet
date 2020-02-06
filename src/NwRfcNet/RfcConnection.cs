@@ -2,7 +2,7 @@ using NwRfcNet.Interop;
 using NwRfcNet.TypeMapper;
 using System;
 
-namespace NwRfcNet 
+namespace NwRfcNet
 {
     /// <summary>
     /// Represents a connection to a RFC server.
@@ -35,9 +35,12 @@ namespace NwRfcNet
         public RfcConnection(string userName = null,
             string password = null,
             string hostname = null,
+            string messageServerHostname = null,
             string client = null,
             string language = null,
             string systemNumber = null,
+            string systemId = null,
+            string group = null,
             string sapRouter = null,
             string sncQop = null,
             string sncMyname = null,
@@ -48,9 +51,12 @@ namespace NwRfcNet
             UserName = userName;
             Password = password;
             Hostname = hostname;
+            MessageServerHostname = messageServerHostname;
             Client = client;
             Language = language;
             SystemNumber = systemNumber;
+            SystemId = systemId;
+            Group = group;
             SapRouter = sapRouter;
             SncQop = sncQop;
             SncMyname = sncMyname;
@@ -97,6 +103,16 @@ namespace NwRfcNet
             }
         }
 
+        public string MessageServerHostname
+        {
+            get => _parms.MessageServerHostname;
+            set
+            {
+                CheckConnectionIsClosed();
+                _parms.MessageServerHostname = value;
+            }
+        }
+
         public string Client
         {
             get => _parms.Client;
@@ -124,6 +140,26 @@ namespace NwRfcNet
             {
                 CheckConnectionIsClosed();
                 _parms.Language = value;
+            }
+        }
+
+        public string SystemId
+        {
+            get => _parms.SystemId;
+            set
+            {
+                CheckConnectionIsClosed();
+                _parms.SystemId = value;
+            }
+        }
+
+        public string Group
+        {
+            get => _parms.Group;
+            set
+            {
+                CheckConnectionIsClosed();
+                _parms.Group = value;
             }
         }
 
@@ -198,7 +234,7 @@ namespace NwRfcNet
         {
             CheckConnectionIsClosed();
             var parms = _parms.GetParms();
-            ConnectionHandle = RfcInterop.RfcOpenConnection(parms, (uint) parms.Length, out var errorInfo);
+            ConnectionHandle = RfcInterop.RfcOpenConnection(parms, (uint)parms.Length, out var errorInfo);
             errorInfo.OnErrorThrowException(() => Clear());
         }
 
@@ -240,7 +276,7 @@ namespace NwRfcNet
         public void SetTraceLevel(string destination, TraceLevel traceLevel)
         {
             CheckConnectionIsOpen();
-            var rc = RfcInterop.RfcSetTraceLevel(ConnectionHandle, destination, (uint) traceLevel, out var errorInfo);
+            var rc = RfcInterop.RfcSetTraceLevel(ConnectionHandle, destination, (uint)traceLevel, out var errorInfo);
             rc.OnErrorThrowException(errorInfo);
         }
 
