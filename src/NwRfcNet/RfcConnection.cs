@@ -234,7 +234,7 @@ namespace NwRfcNet
         {
             CheckConnectionIsClosed();
             var parms = _parms.GetParms();
-            ConnectionHandle = RfcInterop.RfcOpenConnection(parms, (uint)parms.Length, out var errorInfo);
+            ConnectionHandle = RfcInterop.RfcOpenConnection(parms, (uint) parms.Length, out var errorInfo);
             errorInfo.OnErrorThrowException(() => Clear());
         }
 
@@ -276,7 +276,7 @@ namespace NwRfcNet
         public void SetTraceLevel(string destination, TraceLevel traceLevel)
         {
             CheckConnectionIsOpen();
-            var rc = RfcInterop.RfcSetTraceLevel(ConnectionHandle, destination, (uint)traceLevel, out var errorInfo);
+            var rc = RfcInterop.RfcSetTraceLevel(ConnectionHandle, destination, (uint) traceLevel, out var errorInfo);
             rc.OnErrorThrowException(errorInfo);
         }
 
