@@ -78,5 +78,11 @@ namespace NwRfcNet.Interop
         [DllImport(NwRfcLib, CharSet = CharSet.Unicode)]
         public static extern RFC_RC RfcGetString(IntPtr dataHandle, string name, ref char[] stringBuffer, uint valueLength, out uint stringLength, out RFC_ERROR_INFO errorInfo);
 
+        [DllImport(NwRfcLib, CharSet = CharSet.Unicode)]
+        public static extern RFC_RC RfcGetXString(IntPtr dataHandle, string name, byte[] byteBuffer, uint bufferLength, out uint xstringLength, out RFC_ERROR_INFO errorInfo);
+        
+        [DllImport(NwRfcLib, CharSet = CharSet.Unicode)]
+        public static extern RFC_RC RfcSetXString(IntPtr dataHandle, string name, byte[] byteValue, uint bufferLength, out RFC_ERROR_INFO errorInfo);
+
     }
 }

@@ -88,6 +88,10 @@ namespace NwRfcNet
                         SetString(handler, propMap.Value, (string)propValue);
                         break;
 
+                    case RfcFieldType.Byte:
+                        SetXString(handler, propMap.Value, (byte[])propValue);
+                        break;
+                    
                     default:
                         throw new RfcException($"{propMap.Key}, {propMap.Value.RfcParameterName} Rfc Type not handled");
                 }
@@ -131,6 +135,12 @@ namespace NwRfcNet
                 errorInfo.OnErrorThrowException();
                 SetParameters(lineHandle, row);
             }
+        }
+        
+        private static void SetXString(IntPtr dataHandle, PropertyMap map, byte[] byteValue)
+        {
+            var rc = RfcInterop.RfcSetXString(dataHandle, map.RfcParameterName, byteValue, (uint)byteValue.Length, out var errorInfo);
+            rc.OnErrorThrowException(errorInfo);
         }
     }
 }
