@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <AssemblyName>Sample.BapiCompanyList</AssemblyName>
     <RootNamespace>Sample.BapiCompanyList</RootNamespace>
     <Authors>Nuno Maia</Authors>
@@ -10,7 +10,10 @@
 
   <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="2.6.0" />
-    <PackageReference Include="NwRfcNet" Version="0.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\NwRfcNet\NwRfcNet.csproj" />
   </ItemGroup>
 
 </Project>

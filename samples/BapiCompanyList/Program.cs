@@ -1,7 +1,8 @@
-﻿using CommandLine;
+﻿using System;
+using CommandLine;
 using NwRfcNet;
+using NwRfcNet.Interfaces;
 using NwRfcNet.TypeMapper;
-using System;
 
 namespace Sample.BapiCompanyList
 {
@@ -54,11 +55,11 @@ namespace Sample.BapiCompanyList
                     var version = RfcConnection.GetLibVersion();
                     Console.WriteLine($"currently loaded sapnwrfc library version : Major {version.MajorVersion}, Minor {version.MinorVersion}, patchLevel {version.PatchLevel}");
 
-                    using (var conn = new RfcConnection(userName: o.UserName, password: o.Password, hostname: o.Hostname, client: o.Client))
+                    using (IRfcConnection conn = new RfcConnection(userName: o.UserName, password: o.Password, hostname: o.Hostname, client: o.Client))
                     {
                         ParameterMapping();
                         conn.Open();
-                        using (var func = conn.CallRfcFunction("BAPI_COMPANYCODE_GETLIST"))
+                        using (IRfcFunction func = conn.CallRfcFunction("BAPI_COMPANYCODE_GETLIST"))
                         {
                             func.Invoke();
                             var returnValue = func.GetOutputParameters<BapiCompanyOutputParameters>();

@@ -1,13 +1,14 @@
+using System;
+using NwRfcNet.Interfaces;
 using NwRfcNet.Interop;
 using NwRfcNet.TypeMapper;
-using System;
 
 namespace NwRfcNet
 {
     /// <summary>
     /// Represents a connection to a RFC server.
     /// </summary>
-    public sealed class RfcConnection : IDisposable
+    public sealed class RfcConnection : IRfcConnection
     {
         // To detect redundant calls
         private bool _disposed = false;
@@ -69,7 +70,7 @@ namespace NwRfcNet
         /// <summary>
         /// Connection handler to RFC Server
         /// </summary>
-        internal IntPtr ConnectionHandle { get; private set; } = IntPtr.Zero;
+        public IntPtr ConnectionHandle { get; private set; } = IntPtr.Zero;
 
         #region Properties
 
@@ -243,7 +244,7 @@ namespace NwRfcNet
         /// </summary>
         /// <param name="functionName"></param>
         /// <returns></returns>
-        public RfcFunction CallRfcFunction(string functionName)
+        public IRfcFunction CallRfcFunction(string functionName)
         {
             CheckConnectionIsOpen();
             return new RfcFunction(this, functionName);

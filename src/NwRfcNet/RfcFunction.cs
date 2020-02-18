@@ -1,4 +1,5 @@
-﻿using NwRfcNet.Interop;
+﻿using NwRfcNet.Interfaces;
+using NwRfcNet.Interop;
 using NwRfcNet.TypeMapper;
 using System;
 
@@ -7,7 +8,7 @@ namespace NwRfcNet
     /// <summary>
     ///  Represents a connection to a RFC function. 
     /// </summary>
-    public sealed class RfcFunction : IDisposable
+    public sealed class RfcFunction : IRfcFunction
     {
         // To detect redundant calls
         private bool _disposed = false;
