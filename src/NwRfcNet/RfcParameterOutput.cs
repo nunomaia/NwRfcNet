@@ -75,6 +75,10 @@ namespace NwRfcNet
                         objectValue = RfcString.GetFieldValue(handler, map.RfcParameterName)?.RfcValue;
                         break;
 
+                    case RfcFieldType.Byte:
+                        objectValue = RfcXString.GetFieldValue(handler, map.RfcParameterName)?.RfcValue;
+                        break;
+                    
                     default:
                         throw new RfcException("Rfc Type not handled");
                 }
