@@ -1,336 +1,239 @@
-using NwRfcNet.Interop;
+﻿using NwRfcNet.Interop;
 using NwRfcNet.TypeMapper;
 using System;
+using System.Collections.Generic;
 
 namespace NwRfcNet
 {
     /// <summary>
-    /// Represents a connection to a RFC server.
+    /// Represents a RFC connection to a SAP application server (Type A - Connection)
     /// </summary>
     public sealed class RfcConnection : IDisposable
     {
         // To detect redundant calls
-        private bool _disposed = false;
+        private bool disposed = false;
 
-        // connection parameters
-        private readonly RfcConnectionBuilder _parms = new RfcConnectionBuilder();
-
-        #region Constructors
+        private readonly IRfcConnectionParameters options;
 
         /// <summary>
-        /// Creates a connection to a RFC server
+        /// Creates a new <see cref="RfcConnection"/> with parameters out of a dictionary.
         /// </summary>
-        public RfcConnection() { }
-
-        /// <summary>
-        /// Creates a connection to a RFC server
-        /// </summary>
-        /// <param name="userName"></param>
-        /// <param name="password"></param>
-        /// <param name="hostname"></param>
-        /// <param name="client"></param>
-        /// <param name="language"></param>
-        /// <param name="systemNumber"></param>
-        /// <param name="sapRouter"></param>
-        public RfcConnection(string userName = null,
-            string password = null,
-            string hostname = null,
-            string messageServerHostname = null,
-            string client = null,
-            string language = null,
-            string systemNumber = null,
-            string systemId = null,
-            string group = null,
-            string sapRouter = null,
-            string sncQop = null,
-            string sncMyname = null,
-            string sncPartnername = null,
-            string sncLib = null
-            )
+        /// <param name="connectionParameters">The connection parameters.</param>
+        public RfcConnection(IDictionary<string, string> connectionParameters)
         {
-            UserName = userName;
-            Password = password;
-            Hostname = hostname;
-            MessageServerHostname = messageServerHostname;
-            Client = client;
-            Language = language;
-            SystemNumber = systemNumber;
-            SystemId = systemId;
-            Group = group;
-            SapRouter = sapRouter;
-            SncQop = sncQop;
-            SncMyname = sncMyname;
-            SncPartnername = sncPartnername;
-            SncLib = sncLib;
+            if (connectionParameters is null)
+            {
+                throw new ArgumentNullException(nameof(connectionParameters));
+            }
+
+            this.options = new RfcConnectionParameterBuilder().FromDictionary(connectionParameters).Build();
         }
 
-        #endregion
+        /// <summary>
+        /// Creates a new <see cref="RfcConnection"/> with parameters out of an uri (must be in form 'sap://[userName]:[password]@[host]?client=..&amp;system_number=...').
+        /// </summary>
+        /// <param name="connectionUri">The connection uri.</param>
+        public RfcConnection(Uri connectionUri)
+        {
+            if (connectionUri is null)
+            {
+                throw new ArgumentNullException(nameof(connectionUri));
+            }
+
+            this.options = new RfcConnectionParameterBuilder().FromConnectionUri(connectionUri).Build();
+        }
+
+        /// <summary>
+        /// Creates a new <see cref="RfcConnection"/> with parameters out of a connection string (must be in form 'Server=[host]; UserName=[userName]; Password=[password]; Client=[Client]...').
+        /// </summary>
+        /// <param name="connectionString">The connection string.</param>
+        public RfcConnection(string connectionString)
+        {
+            if (connectionString is null)
+            {
+                throw new ArgumentNullException(nameof(connectionString));
+            }
+
+            this.options = new RfcConnectionParameterBuilder().FromConnectionString(connectionString).Build();
+        }
+
+        /// <summary>
+        /// Creates a new <see cref="RfcConnection"/> with parameters created using a <see cref="RfcConnectionParameterBuilder"/>.
+        /// </summary>
+        /// <param name="builder">The connection parameter builder action.</param>
+        public RfcConnection(Action<RfcConnectionParameterBuilder> builder)
+        {
+            if (builder is null)
+            {
+                throw new ArgumentNullException(nameof(builder));
+            }
+
+            var builderInstance = new RfcConnectionParameterBuilder();
+            builder(builderInstance);
+            this.options = builderInstance.Build();
+        }
+
+        /// <summary>
+        /// Creates a new <see cref="RfcConnection"/> with parameters created using a <see cref="RfcConnectionParameterBuilder"/>.
+        /// </summary>
+        /// <param name="builder">The connection parameter builder.</param>
+        public RfcConnection(RfcConnectionParameterBuilder builder)
+        {
+            if (builder is null)
+            {
+                throw new ArgumentNullException(nameof(builder));
+            }
+
+            this.options = builder.Build();
+        }
 
         /// <summary>
         /// Connection handler to RFC Server
         /// </summary>
         internal IntPtr ConnectionHandle { get; private set; } = IntPtr.Zero;
 
-        #region Properties
-
-        public string UserName
-        {
-            get => _parms.UserName;
-            set
-            {
-                CheckConnectionIsClosed();
-                _parms.UserName = value;
-            }
-        }
-
-        public string Password
-        {
-            private get => _parms.Password;
-            set
-            {
-                CheckConnectionIsClosed();
-                _parms.Password = value;
-            }
-        }
-
-        public string Hostname
-        {
-            get => _parms.Hostname;
-            set
-            {
-                CheckConnectionIsClosed();
-                _parms.Hostname = value;
-            }
-        }
-
-        public string MessageServerHostname
-        {
-            get => _parms.MessageServerHostname;
-            set
-            {
-                CheckConnectionIsClosed();
-                _parms.MessageServerHostname = value;
-            }
-        }
-
-        public string Client
-        {
-            get => _parms.Client;
-            set
-            {
-                CheckConnectionIsClosed();
-                _parms.Client = value;
-            }
-        }
-
-        public string SystemNumber
-        {
-            get => _parms.SystemNumber;
-            set
-            {
-                CheckConnectionIsClosed();
-                _parms.SystemNumber = value;
-            }
-        }
-
-        public string Language
-        {
-            get => _parms.Language;
-            set
-            {
-                CheckConnectionIsClosed();
-                _parms.Language = value;
-            }
-        }
-
-        public string SystemId
-        {
-            get => _parms.SystemId;
-            set
-            {
-                CheckConnectionIsClosed();
-                _parms.SystemId = value;
-            }
-        }
-
-        public string Group
-        {
-            get => _parms.Group;
-            set
-            {
-                CheckConnectionIsClosed();
-                _parms.Group = value;
-            }
-        }
-
-        public string SapRouter
-        {
-            get => _parms.SapRouter;
-            set
-            {
-                CheckConnectionIsClosed();
-                _parms.SapRouter = value;
-            }
-        }
-
-        public string Trace
-        {
-            get => _parms.Trace;
-            set
-            {
-                CheckConnectionIsClosed();
-                _parms.Trace = value;
-            }
-        }
-
-        public string SncQop
-        {
-            get => _parms.SncQop;
-            set
-            {
-                CheckConnectionIsClosed();
-                _parms.SncQop = value;
-            }
-        }
-
-        public string SncMyname
-        {
-            get => _parms.SncMyname;
-            set
-            {
-                CheckConnectionIsClosed();
-                _parms.SncMyname = value;
-            }
-        }
-
-        public string SncPartnername
-        {
-            get => _parms.SncPartnername;
-            set
-            {
-                CheckConnectionIsClosed();
-                _parms.SncPartnername = value;
-            }
-        }
-
-        public string SncLib
-        {
-            get => _parms.SncLib;
-            set
-            {
-                CheckConnectionIsClosed();
-                _parms.SncLib = value;
-            }
-        }
-
-        public RfcMapper Mapper { get; set; } = RfcMapper.DefaultMapper;
-
-        #endregion
+        /// <summary>
+        /// Gets the parameters used to create this connection.
+        /// </summary>
+        public IReadOnlyDictionary<string, string> ConnectionParameters => this.options.Parameters;
 
         /// <summary>
-        /// Opens an RFC connection 
+        /// Gets or sets the mapper used during this connection.
+        /// </summary>
+        public RfcMapper Mapper { get; set; } = RfcMapper.DefaultMapper;
+
+        /// <summary>
+        /// Opens the connection.
         /// </summary>
         public void Open()
         {
-            CheckConnectionIsClosed();
-            var parms = _parms.GetParms();
-            ConnectionHandle = RfcInterop.RfcOpenConnection(parms, (uint) parms.Length, out var errorInfo);
-            errorInfo.OnErrorThrowException(() => Clear());
+            this.ThrowWhenConnectionIsOpen();
+            var parms = CreateInteropConnectionParameters(this.options.Parameters);
+            this.ConnectionHandle = RfcInterop.RfcOpenConnection(parms, (uint)parms.Length, out var errorInfo);
+            errorInfo.OnErrorThrowException(() => this.Clear());
         }
 
         /// <summary>
-        /// Creates a call to a RFC 
+        /// Creates a call to a remove function.
         /// </summary>
-        /// <param name="functionName"></param>
-        /// <returns></returns>
+        /// <param name="functionName">The name of the function.</param>
+        /// <returns>The called function.</returns>
         public RfcFunction CallRfcFunction(string functionName)
         {
-            CheckConnectionIsOpen();
+            this.ThrowEhenConnectionIsClosed();
             return new RfcFunction(this, functionName);
         }
 
         /// <summary>
-        ///  Sends a ping to the RFC backend to check if the connection is still alive.
+        /// Sends a ping to the connected RFC host to check if the connection is still alive.
         /// </summary>
         public bool Ping()
         {
-            CheckConnectionIsOpen();
-            return RfcInterop.RfcPing(ConnectionHandle, out _) == RfcInterop.RFC_RC.RFC_OK;
+            this.ThrowEhenConnectionIsClosed();
+            return RfcInterop.RfcPing(this.ConnectionHandle, out _) == RfcInterop.RFC_RC.RFC_OK;
         }
 
         /// <summary>
-        /// Information about currently loaded sapnwrfc library
+        /// Information about currently loaded native library.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The version of the used native library.</returns>
         public static RfcLibVersion GetLibVersion()
         {
-            RfcInterop.RfcGetVersion(out uint majorVersion, out uint minorVersion, out uint patchLevel);
+            RfcInterop.RfcGetVersion(out var majorVersion, out var minorVersion, out var patchLevel);
             return new RfcLibVersion(majorVersion, minorVersion, patchLevel);
         }
 
         /// <summary>
         /// Defines Trace Level
         /// </summary>
-        /// <param name="destination">server destination definined in sapnwrfc.ini</param>
-        /// <param name="traceLevel">Trace Level</param>
+        /// <param name="destination">The server destination definined in sapnwrfc.ini</param>
+        /// <param name="traceLevel">The trace level to use.</param>
         public void SetTraceLevel(string destination, TraceLevel traceLevel)
         {
-            CheckConnectionIsOpen();
-            var rc = RfcInterop.RfcSetTraceLevel(ConnectionHandle, destination, (uint) traceLevel, out var errorInfo);
+            this.ThrowEhenConnectionIsClosed();
+            var rc = RfcInterop.RfcSetTraceLevel(this.ConnectionHandle, destination, (uint)traceLevel, out var errorInfo);
             rc.OnErrorThrowException(errorInfo);
         }
 
         /// <summary>
-        /// Closes an RFC connection  
+        /// Closes the connection.
         /// </summary>
         public void Close()
         {
-            if (ConnectionHandle == IntPtr.Zero)
+            if (this.ConnectionHandle == IntPtr.Zero)
+            {
                 return;
-
-            RfcInterop.RfcCloseConnection(ConnectionHandle, out var errorInfo);
-            errorInfo.OnErrorThrowException(() => Clear());
-            Clear();
+            }
+            RfcInterop.RfcCloseConnection(this.ConnectionHandle, out var errorInfo);
+            errorInfo.OnErrorThrowException(() => this.Clear());
+            this.Clear();
         }
 
-
-        #region Dispose
-        void Dispose(bool disposing)
+        private void Dispose(bool disposing)
         {
-            if (_disposed)
+            if (this.disposed)
+            {
                 return;
+            }
 
             if (disposing)
-                Close();
+            {
+                this.Close();
+            }
 
-            _disposed = true;
+            this.disposed = true;
         }
 
-        public void Dispose() => Dispose(true);
+        /// <summary>
+        /// Disposes the connection. Disposing automatically closes the connection.
+        /// </summary>
+        public void Dispose() => this.Dispose(true);
 
-        #endregion
+        private void Clear() => this.ConnectionHandle = IntPtr.Zero;
 
-        private void Clear() => ConnectionHandle = IntPtr.Zero;
-
-        private void CheckConnectionIsClosed()
+        private void ThrowWhenConnectionIsOpen()
         {
-            CheckDisposed();
-            if (ConnectionHandle != IntPtr.Zero)
+            this.ThrowWhenAlreadyDisposed();
+            if (this.ConnectionHandle != IntPtr.Zero)
+            {
                 throw new InvalidOperationException("Connection is open");
+            }
         }
 
-        private void CheckConnectionIsOpen()
+        private void ThrowEhenConnectionIsClosed()
         {
-            CheckDisposed();
-            if (ConnectionHandle == IntPtr.Zero)
+            this.ThrowWhenAlreadyDisposed();
+            if (this.ConnectionHandle == IntPtr.Zero)
+            {
                 throw new InvalidOperationException("Connection is closed");
+            }
         }
 
-        private void CheckDisposed()
+        private void ThrowWhenAlreadyDisposed()
         {
-            if (_disposed)
+            if (this.disposed)
+            {
                 throw new ObjectDisposedException(typeof(RfcConnection).Name);
+            }
         }
+
+        private static RfcInterop.RFC_CONNECTION_PARAMETER[] CreateInteropConnectionParameters(IReadOnlyDictionary<string, string> parameters)
+        {
+            var rfcParams = new List<RfcInterop.RFC_CONNECTION_PARAMETER>();
+            foreach (var prop in parameters)
+            {
+                if (prop.Value != null)
+                {
+                    rfcParams.Add(new RfcInterop.RFC_CONNECTION_PARAMETER()
+                    {
+                        Name = prop.Key,
+                        Value = prop.Value
+                    }); ;
+                }
+            }
+            return rfcParams.ToArray();
+        }
+
 
     }
 
