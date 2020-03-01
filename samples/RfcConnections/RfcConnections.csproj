@@ -3,8 +3,8 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.2</TargetFramework>
-    <AssemblyName>Sample.BapiCustomerDetail</AssemblyName>
-    <RootNamespace>Sample.BapiCustomerDetail</RootNamespace>
+    <AssemblyName>Sample.RfcConnections</AssemblyName>
+    <RootNamespace>Sample.RfcConnections</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,5 +14,4 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\NwRfcNet\NwRfcNet.csproj" />
   </ItemGroup>
-
 </Project>

@@ -54,7 +54,11 @@ namespace Sample.BapiCompanyList
                     var version = RfcConnection.GetLibVersion();
                     Console.WriteLine($"currently loaded sapnwrfc library version : Major {version.MajorVersion}, Minor {version.MinorVersion}, patchLevel {version.PatchLevel}");
 
-                    using (var conn = new RfcConnection(userName: o.UserName, password: o.Password, hostname: o.Hostname, client: o.Client))
+                    using (var conn = new RfcConnection(builder => builder
+                        .UseConnectionHost(o.Hostname)
+                        .UseLogonUserName(o.UserName)
+                        .UseLogonPassword(o.Password)
+                        .UseLogonClient(o.Client)))
                     {
                         ParameterMapping();
                         conn.Open();

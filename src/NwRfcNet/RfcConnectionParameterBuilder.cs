@@ -299,27 +299,27 @@ namespace NwRfcNet
               .ToDictionary(kvp => kvp[0].Trim(), kvp => kvp[1].Trim(), StringComparer.OrdinalIgnoreCase);
 
             var userName = this.GetWhenPresent(userInfoKvp, UserNameKeyAliases);
-            userName = connectionUri.UserEscaped ? Uri.UnescapeDataString(userName) : userName;
+            userName = this.GetUnescapedWhenPresent(userName);
 
             var password = this.GetWhenPresent(userInfoKvp, PasswordKeyAliases);
-            password = connectionUri.UserEscaped ? Uri.UnescapeDataString(password) : password;
+            password = this.GetUnescapedWhenPresent(password);
 
             var client = this.GetWhenPresent(userInfoKvp, LogonClientKeyAliases);
-            client = connectionUri.UserEscaped ? Uri.UnescapeDataString(client) : client;
+            client = this.GetUnescapedWhenPresent(client);
 
             var language = this.GetWhenPresent(userInfoKvp, LogonLanguageKeyAliases);
-            language = connectionUri.UserEscaped ? Uri.UnescapeDataString(language) : language;
+            language = this.GetUnescapedWhenPresent(language); ;
 
             var sncMode = this.GetWhenPresent(userInfoKvp, SncModeKeyAliases);
-            sncMode = connectionUri.UserEscaped ? Uri.UnescapeDataString(sncMode) : sncMode;
+            sncMode = this.GetUnescapedWhenPresent(sncMode);
 
-            var param = connectionUri.PathAndQuery.ParseQueryString();
+            var param = connectionUri.Query.ParseQueryString();
 
-            param.Add("userName", userName);
-            param.Add("password", password);
-            param.Add("client", client);
-            param.Add("language", language);
-            param.Add("snc_mode", sncMode);
+            param.Add(RfcConnectionParameters.DefaultUserNameParameterKey, userName);
+            param.Add(RfcConnectionParameters.DefaultPasswordParameterKey, password);
+            param.Add(RfcConnectionParameters.DefaultClientParameterKey, client);
+            param.Add(RfcConnectionParameters.DefaultConnectionLanguageParameterKey, language);
+            param.Add(RfcConnectionParameters.DefaultSncModeParameterKey, sncMode);
 
             if (connectionUri.Host.Equals("A", StringComparison.OrdinalIgnoreCase))
             {
@@ -328,10 +328,12 @@ namespace NwRfcNet
                 {
                     throw new ArgumentException(paramName: nameof(connectionUri), message: "The uri must contain the sap application server host (ASHOST) in the second segment.");
                 }
+                param.Add(RfcConnectionParameters.DefaultHostParameterKey, detail1);
+
                 var detail2 = connectionUri.Segments.Length > 2 ? connectionUri.Segments[2] : null;
-                if (detail2 == null)
+                if (!string.IsNullOrWhiteSpace(detail2))
                 {
-                    throw new ArgumentException(paramName: nameof(connectionUri), message: "The uri must contain the sap system number (SYSNR) in the third segment.");
+                    param.Add(RfcConnectionParameters.DefaultSystemNumberKey, detail2);
                 }
             }
             else
@@ -438,6 +440,11 @@ namespace NwRfcNet
                 }
             }
             return null;
+        }
+
+        private string GetUnescapedWhenPresent(string value)
+        {
+            return (value != null) ? Uri.UnescapeDataString(value) : value;
         }
 
         private void FromValues(string userName,

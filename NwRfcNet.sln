@@ -23,6 +23,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BapiGetGlAccountBalance", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RfcReadTable", "samples\RfcReadTable\RfcReadTable.csproj", "{19EA3504-609D-4D91-801D-947ED3E33975}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RfcConnections", "samples\RfcConnections\RfcConnections.csproj", "{2AA00254-625E-4952-94CF-C95C66C04EF6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -117,6 +119,18 @@ Global
 		{19EA3504-609D-4D91-801D-947ED3E33975}.Release|x64.Build.0 = Release|Any CPU
 		{19EA3504-609D-4D91-801D-947ED3E33975}.Release|x86.ActiveCfg = Release|Any CPU
 		{19EA3504-609D-4D91-801D-947ED3E33975}.Release|x86.Build.0 = Release|Any CPU
+		{2AA00254-625E-4952-94CF-C95C66C04EF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2AA00254-625E-4952-94CF-C95C66C04EF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2AA00254-625E-4952-94CF-C95C66C04EF6}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{2AA00254-625E-4952-94CF-C95C66C04EF6}.Debug|x64.Build.0 = Debug|Any CPU
+		{2AA00254-625E-4952-94CF-C95C66C04EF6}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2AA00254-625E-4952-94CF-C95C66C04EF6}.Debug|x86.Build.0 = Debug|Any CPU
+		{2AA00254-625E-4952-94CF-C95C66C04EF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2AA00254-625E-4952-94CF-C95C66C04EF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2AA00254-625E-4952-94CF-C95C66C04EF6}.Release|x64.ActiveCfg = Release|Any CPU
+		{2AA00254-625E-4952-94CF-C95C66C04EF6}.Release|x64.Build.0 = Release|Any CPU
+		{2AA00254-625E-4952-94CF-C95C66C04EF6}.Release|x86.ActiveCfg = Release|Any CPU
+		{2AA00254-625E-4952-94CF-C95C66C04EF6}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -129,6 +143,7 @@ Global
 		{D506F2A9-D77B-490B-872B-680729E5529E} = {813ACAE4-6905-4DE0-BD6B-AADF0535B2B5}
 		{F4C2ADD5-BA4C-45C2-AEF6-3340A5CDF0C2} = {813ACAE4-6905-4DE0-BD6B-AADF0535B2B5}
 		{19EA3504-609D-4D91-801D-947ED3E33975} = {813ACAE4-6905-4DE0-BD6B-AADF0535B2B5}
+		{2AA00254-625E-4952-94CF-C95C66C04EF6} = {813ACAE4-6905-4DE0-BD6B-AADF0535B2B5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3BA7E01A-BE1C-404B-838B-0766A1657F8B}
