@@ -1,4 +1,4 @@
-# .NET client library for SAP NetWeawer RFC
+# .NET client library for SAP NetWeaver RFC
 An easy way of making SAP RFC calls from .NET. Libray is supported in Windows, Linux and macOS.
 
 ## Supported Platforms & Prerequisites
@@ -62,7 +62,24 @@ Map RFC mapameters to class
 Open a connection to server and invoke a BAPI 
 
 ```C#
-    using (var conn = new RfcConnection(userName, password, hostname, client))
+    using (var conn = new RfcConnection(builder => builder
+        .UseConnectionHost("hostname")
+        .UseLogonUserName("user")
+        .UseLogonPassword("password)
+        .UseLogonClient("cln")))
+    {
+        conn.Open();
+        using(var func = _conn.CallRfcFunction("BAPI_COMPANYCODE_GETLIST"))
+        {
+            func.Invoke();
+        }
+    }
+```
+
+or 
+
+```C#
+    using (var conn = new RfcConnection("Server=server_name; lang=en; user=testUser;pwd=secret"))
     {
         conn.Open();
         using(var func = _conn.CallRfcFunction("BAPI_COMPANYCODE_GETLIST"))
@@ -94,7 +111,7 @@ Output should be
 
 Included samples in project
 
-* List FI Comapnies
+* List FI Companies
 * List FI Customers
 * Get Details of a FI Customer
 * FI General Ledger Account
