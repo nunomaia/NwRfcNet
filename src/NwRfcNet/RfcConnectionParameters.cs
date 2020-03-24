@@ -27,12 +27,11 @@ namespace NwRfcNet
 
         private readonly IDictionary<string, string> connectionParameters;
 
-        public RfcConnectionParameters()
-        {
-            this.connectionParameters = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-        }
+        public RfcConnectionParameters() => 
+            connectionParameters = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
-        public IReadOnlyDictionary<string, string> Parameters => new ReadOnlyDictionary<string, string>(this.connectionParameters);
+        public IReadOnlyDictionary<string, string> Parameters => 
+            new ReadOnlyDictionary<string, string>(connectionParameters);
 
         public RfcConnectionParameters SetParameter(string key, string value)
         {
@@ -46,13 +45,13 @@ namespace NwRfcNet
                 throw new ArgumentNullException(nameof(value));
             }
 
-            if (!this.connectionParameters.ContainsKey(key))
+            if (!connectionParameters.ContainsKey(key))
             {
-                this.connectionParameters.Add(key, value);
+                connectionParameters.Add(key, value);
             }
             else
             {
-                this.connectionParameters[key] = value;
+                connectionParameters[key] = value;
             }
             return this;
         }

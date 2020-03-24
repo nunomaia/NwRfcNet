@@ -5,8 +5,6 @@ namespace NwRfcNet.RfcTypes
 {
     public class RfcChar : IRfcType<string>
     {
-        private readonly string _rfcValue;
-        
         public RfcChar(char[] buffer, int maxSize)
         {
             if (maxSize > buffer.Length)

@@ -7,17 +7,8 @@ namespace Sample.BapiCustomerList
 {
     class Options
     {
-        [Option('u', "username", Required = true, HelpText = "RFC User Name")]
-        public string UserName { get; set; }
-
-        [Option('p', "password", Required = true, HelpText = "RFC User Password")]
-        public string Password { get; set; }
-
-        [Option('h', "hostname", Required = true, HelpText = "RFC Server Hostname")]
-        public string Hostname { get; set; }
-
-        [Option('c', "client", Required = true, HelpText = "RFC Server Client Id")]
-        public string Client { get; set; }
+        [Option('c', "connection", Required = true, HelpText = "Connection String")]
+        public string Connection { get; set; }
     }
 
     class Program
@@ -90,35 +81,27 @@ namespace Sample.BapiCustomerList
                            var version = RfcConnection.GetLibVersion();
                            Console.WriteLine($"currently loaded sapnwrfc library version : Major {version.MajorVersion}, Minor {version.MinorVersion}, patchLevel {version.PatchLevel}");
 
-                           using (var conn = new RfcConnection(builder => builder
-                                .UseConnectionHost(o.Hostname)
-                                .UseLogonUserName(o.UserName)
-                                .UseLogonPassword(o.Password)
-                                .UseLogonClient(o.Client)))
+                           using var conn = new RfcConnection(o.Connection);
+                           conn.Open();
+                           using var func = conn.CallRfcFunction("BAPI_CUSTOMER_GETLIST");
+                           var inParams = new ListCustomersInputParameters
                            {
-                               conn.Open();
-                               using (var func = conn.CallRfcFunction("BAPI_CUSTOMER_GETLIST"))
-                               {
-                                    var inParams = new ListCustomersInputParameters
-                                    {
-                                        MaxRows = 10,
-                                        Range = new IdRange[]
-                                        {
+                               MaxRows = 10,
+                               Range = new IdRange[]
+{
                                             new IdRange() {   Sign = "I", Option = "BT", High = "ZZZZZZZZZZ" }
-                                        }
-                                    };
+}
+                           };
 
-                                    func.Invoke(inParams);
-                                    var returnValue = func.GetOutputParameters<ListCustomersOutputParameters>();
+                           func.Invoke(inParams);
+                           var returnValue = func.GetOutputParameters<ListCustomersOutputParameters>();
 
-                                    Console.WriteLine(String.Format("|{0,-20}|{1,-10}", "Customer Number", "Customer Name"));
-                                    foreach (var row in returnValue.Addresses)
-                                    {
-                                        Console.WriteLine(String.Format("|{0,-20}|{1,-10}", row.CustomerId, row.Name));
-                                    }
-                               }
+                           Console.WriteLine(String.Format("|{0,-20}|{1,-10}", "Customer Number", "Customer Name"));
+                           foreach (var row in returnValue.Addresses)
+                           {
+                               Console.WriteLine(String.Format("|{0,-20}|{1,-10}", row.CustomerId, row.Name));
                            }
-                        } 
+                       } 
                         catch (Exception ex) 
                         {
                             Console.WriteLine(ex.Message);

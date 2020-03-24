@@ -62,7 +62,24 @@ Map RFC mapameters to class
 Open a connection to server and invoke a BAPI 
 
 ```C#
-    using (var conn = new RfcConnection(userName, password, hostname, client))
+    using (var conn = new RfcConnection(builder => builder
+        .UseConnectionHost("hostname")
+        .UseLogonUserName("user")
+        .UseLogonPassword("password)
+        .UseLogonClient("cln")))
+    {
+        conn.Open();
+        using(var func = _conn.CallRfcFunction("BAPI_COMPANYCODE_GETLIST"))
+        {
+            func.Invoke();
+        }
+    }
+```
+
+or 
+
+```C#
+    using (var conn = new RfcConnection("Server=server_name;lang=en;user=testUser;pwd=secret"))
     {
         conn.Open();
         using(var func = _conn.CallRfcFunction("BAPI_COMPANYCODE_GETLIST"))
@@ -100,28 +117,20 @@ Included samples in project
 * FI General Ledger Account
 * RFC Read Table
 
-## Single sign-on (SSO)
+## Connection String
 
-Alternatively it's possible to sign-on with SSO instead of user and password. 
+Example : Server=server_name;lang=en;user=testUser;pwd=secret
 
-Example :  Opening a RFC connection using NTLM.  
- 
-```C#
-    var conn = new RfcConnection(
-        hostname: "server_name", 
-        client: "000", 
-        sncPartnername: @"p:DOMAIN\SRVACC",
-        sncLib: @"gx64ntlm.dll" )
-``` 
-
-Define the SNC parameters related to your environment. If SncLib is not defined, NetWeaver RFC Library uses library defined in environment variable SNC_LIB or SNC_LIB_64.
-
-```C#
-        public string SncQop { get ; set; }
-
-        public string SncMyname { get; set; }
-
-        public string SncPartnername { get; set; }
-
-        public string SncLib { get; set; }
-``` 
+| Value             | Alias                                                                 |
+| ----------------- | ----------------------------------------------------------------------|
+| User Name         | "userName", "userId", "uid", "user", "u"                              |
+| password          | "password", "passwd", "pass", "pwd", "p"                              |
+| Host              | "target_host", "targetHost", "host", "server", "h"                    |
+| Logon Language    | "language", "lang", "l"                                               |
+| System Client     | "client", "cl", "c"                                                   |
+| SystemNumber      | "system_number", "systemnumber", "sysnr"                              |
+| SystemId          | "system_id", "systemid", "sysid"                                      |
+| Trace             | "trace", "tr", "RfcSdkTrace"                                          |
+| Snc Mode          | "snc_mode", "sncmode", "UseSnc", "snc"                                |
+|  Snc Qop          | "snc_partnername", "sncpartnername", "snc_partner", "sncpartner"      |
+| Snc Lib           | "snc_library", "snc_lib", "snclib"                                    |

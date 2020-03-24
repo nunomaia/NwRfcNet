@@ -40,7 +40,7 @@ namespace NwRfcNet
         /// </summary>
         public RfcConnectionParameterBuilder()
         {
-            this.parameters = new RfcConnectionParameters();
+            parameters = new RfcConnectionParameters();
         }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace NwRfcNet
         /// <param name="key">The key for the parameter.</param>
         /// <returns>The connection parameter builder.</returns>
         public RfcConnectionParameterBuilder UseLogonUserName(string userName, string key = RfcConnectionParameters.DefaultUserNameParameterKey) =>
-          this.SetParameter(key, userName);
+          SetParameter(key, userName);
 
         /// <summary>
         /// Sets the password for the RFC connection.
@@ -59,7 +59,7 @@ namespace NwRfcNet
         /// <param name="key">The key for the parameter.</param>
         /// <returns>The connection parameter builder.</returns>
         public RfcConnectionParameterBuilder UseLogonPassword(string password, string key = RfcConnectionParameters.DefaultPasswordParameterKey) =>
-          this.SetParameter(key, password);
+          SetParameter(key, password);
 
         /// <summary>
         /// Sets the connection client.
@@ -68,7 +68,7 @@ namespace NwRfcNet
         /// <param name="key">The key for the parameter.</param>
         /// <returns>The connection parameter builder.</returns>
         public RfcConnectionParameterBuilder UseLogonClient(string client, string key = RfcConnectionParameters.DefaultClientParameterKey) =>
-          this.SetParameter(key, client);
+          SetParameter(key, client);
 
         /// <summary>
         /// Sets the connection language.
@@ -77,7 +77,7 @@ namespace NwRfcNet
         /// <param name="key">The key for the parameter.</param>
         /// <returns>The connection parameter builder.</returns>
         public RfcConnectionParameterBuilder UseLogonLanguage(string connectionLanguage, string key = RfcConnectionParameters.DefaultConnectionLanguageParameterKey) =>
-          this.SetParameter(key, connectionLanguage);
+          SetParameter(key, connectionLanguage);
 
         /// <summary>
         /// Sets the host name of the sap server.
@@ -86,7 +86,7 @@ namespace NwRfcNet
         /// <param name="key">The key for the parameter.</param>
         /// <returns>The connection parameter builder.</returns>
         public RfcConnectionParameterBuilder UseConnectionHost(string host, string key = RfcConnectionParameters.DefaultHostParameterKey) =>
-          this.SetParameter(key, host);
+          SetParameter(key, host);
 
         /// <summary>
         /// Sets the sap system number.
@@ -95,7 +95,7 @@ namespace NwRfcNet
         /// <param name="key">The key for the parameter.</param>
         /// <returns>The connection parameter builder.</returns>
         public RfcConnectionParameterBuilder UseSystemNumber(string systemNumber, string key = RfcConnectionParameters.DefaultSystemNumberKey) =>
-          this.SetParameter(key, systemNumber);
+          SetParameter(key, systemNumber);
 
         /// <summary>
         /// Sets the id of the sap system.
@@ -104,7 +104,7 @@ namespace NwRfcNet
         /// <param name="key">The key for the parameter.</param>
         /// <returns>The connection parameter builder.</returns>
         public RfcConnectionParameterBuilder UseSystemId(string systemId, string key = RfcConnectionParameters.DefaultSystemIdKey) =>
-          this.SetParameter(key, systemId);
+          SetParameter(key, systemId);
 
         /// <summary>
         /// Sets the trace state of the connection (This must be 'true/false', '0/1', 'On/Off', 'enabled/disabled', 'yes/no').
@@ -121,11 +121,11 @@ namespace NwRfcNet
 
             if (ActivationAliases.Any(aa => trace.IndexOf(aa, StringComparison.OrdinalIgnoreCase) > -1))
             {
-                this.SetParameter(key, "1");
+                SetParameter(key, "1");
             }
             else if (DeactivationAliases.Any(da => trace.IndexOf(da, StringComparison.OrdinalIgnoreCase) > -1))
             {
-                this.SetParameter(key, "0");
+                SetParameter(key, "0");
             }
             else
             {
@@ -148,7 +148,7 @@ namespace NwRfcNet
                 throw new ArgumentException(paramName: nameof(connectionPoolSize), message: "The connection pool size must be at greater than zero.");
             }
 
-            return this.SetParameter(key, connectionPoolSize.ToString());
+            return SetParameter(key, connectionPoolSize.ToString());
         }
 
         /// <summary>
@@ -158,7 +158,7 @@ namespace NwRfcNet
         /// <param name="key">The key for the parameter.</param>
         /// <returns>The connection parameter builder.</returns>
         public RfcConnectionParameterBuilder UseSapRouter(string sapRouter, string key = RfcConnectionParameters.DefaultSapRouterParameterKey) =>
-           this.SetParameter(key, sapRouter);
+           SetParameter(key, sapRouter);
 
         /// <summary>
         /// Sets the secure network communication quality of protection (This must be one of the values '1','2','3','8','9').
@@ -170,7 +170,7 @@ namespace NwRfcNet
         {
             if (int.TryParse(sncQop, out var parsed) && (parsed == 1 || parsed == 2 || parsed == 3 || parsed == 8 || parsed == 9))
             {
-                this.SetParameter(key, parsed.ToString());
+                SetParameter(key, parsed.ToString());
             }
 
             throw new ArgumentException(paramName: nameof(sncQop), message: "The only permitted values for the quality of protection are: '1','2','3','8','9'.");
@@ -186,7 +186,7 @@ namespace NwRfcNet
         {
             if (int.TryParse(sncMode, out var parsed) && (parsed == 0 || parsed == 1))
             {
-                this.SetParameter(key, parsed.ToString());
+                SetParameter(key, parsed.ToString());
             }
 
             throw new ArgumentException(paramName: nameof(sncMode), message: "The only permitted values for the snc-mode are: '0' for SNC-Disabled or'1' for SNC-Enabled.");
@@ -199,7 +199,7 @@ namespace NwRfcNet
         /// <param name="key">The key for the parameter.</param>
         /// <returns>The connection parameter builder.</returns>
         public RfcConnectionParameterBuilder UseSecureNetworkCommunicationMyName(string sncMyName, string key = RfcConnectionParameters.DefaultSncMyNameParameterKey) =>
-           this.SetParameter(key, sncMyName);
+           SetParameter(key, sncMyName);
 
         /// <summary>
         /// Sets the secure network communication library.
@@ -208,7 +208,7 @@ namespace NwRfcNet
         /// <param name="key">The key for the parameter.</param>
         /// <returns>The connection parameter builder.</returns>
         public RfcConnectionParameterBuilder UseSecureNetworkCommunicationLibrary(string sncLibName, string key = RfcConnectionParameters.DefaultSncLibParameterKey) =>
-           this.SetParameter(key, sncLibName);
+           SetParameter(key, sncLibName);
 
         /// <summary>
         /// Sets the secure network communication partner.
@@ -217,7 +217,7 @@ namespace NwRfcNet
         /// <param name="key">The key for the parameter.</param>
         /// <returns>The connection parameter builder.</returns>
         public RfcConnectionParameterBuilder UseSecureNetworkCommunicationPartner(string sncPartnerName, string key = RfcConnectionParameters.DefaultSncPartnerNameParameterKey) =>
-           this.SetParameter(key, sncPartnerName);
+           SetParameter(key, sncPartnerName);
 
         /// <summary>
         /// Sets an additional connection parameter.
@@ -226,7 +226,7 @@ namespace NwRfcNet
         /// <param name="parameterKey">The key for the parameter.</param>
         /// <returns>The connection parameter builder.</returns>
         public RfcConnectionParameterBuilder UseAdditionalParameter(string parameterValue, string parameterKey) =>
-           this.SetParameter(parameterKey, parameterValue);
+           SetParameter(parameterKey, parameterValue);
 
         /// <summary>
         /// Sets multiple logon parameters for the connection creation.
@@ -258,10 +258,10 @@ namespace NwRfcNet
                 throw new ArgumentNullException(nameof(password));
             }
 
-            this.UseLogonLanguage(language);
-            this.UseLogonClient(client);
-            this.UseLogonUserName(userName);
-            this.UseLogonPassword(password);
+            UseLogonLanguage(language);
+            UseLogonClient(client);
+            UseLogonUserName(userName);
+            UseLogonPassword(password);
             return this;
         }
 
@@ -292,26 +292,26 @@ namespace NwRfcNet
                 throw new ArgumentException(paramName: nameof(connectionUri), message: $"The connection string uri must have the scheme '{ConnectionUriScheme}'.");
             }
 
-            var userInfo = connectionUri?.UserInfo.Split(new[] { ConnectionStringItemSeparator }, StringSplitOptions.RemoveEmptyEntries) ?? new string[] { };
+            var userInfo = connectionUri?.UserInfo.Split(new[] { ConnectionStringItemSeparator }, StringSplitOptions.RemoveEmptyEntries) ?? Array.Empty<string>();
             var userInfoKvp = userInfo
               .Where(kvp => kvp.Contains(ConnectionStringKeyValueSeparator))
               .Select(kvp => kvp.Split(ConnectionStringKeyValueSeparatorSplit, 2))
               .ToDictionary(kvp => kvp[0].Trim(), kvp => kvp[1].Trim(), StringComparer.OrdinalIgnoreCase);
 
-            var userName = this.GetWhenPresent(userInfoKvp, UserNameKeyAliases);
-            userName = this.GetUnescapedWhenPresent(userName);
+            var userName = GetWhenPresent(userInfoKvp, UserNameKeyAliases);
+            userName = GetUnescapedWhenPresent(userName);
 
-            var password = this.GetWhenPresent(userInfoKvp, PasswordKeyAliases);
-            password = this.GetUnescapedWhenPresent(password);
+            var password = GetWhenPresent(userInfoKvp, PasswordKeyAliases);
+            password = GetUnescapedWhenPresent(password);
 
-            var client = this.GetWhenPresent(userInfoKvp, LogonClientKeyAliases);
-            client = this.GetUnescapedWhenPresent(client);
+            var client = GetWhenPresent(userInfoKvp, LogonClientKeyAliases);
+            client = GetUnescapedWhenPresent(client);
 
-            var language = this.GetWhenPresent(userInfoKvp, LogonLanguageKeyAliases);
-            language = this.GetUnescapedWhenPresent(language); ;
+            var language = GetWhenPresent(userInfoKvp, LogonLanguageKeyAliases);
+            language = GetUnescapedWhenPresent(language); ;
 
-            var sncMode = this.GetWhenPresent(userInfoKvp, SncModeKeyAliases);
-            sncMode = this.GetUnescapedWhenPresent(sncMode);
+            var sncMode = GetWhenPresent(userInfoKvp, SncModeKeyAliases);
+            sncMode = GetUnescapedWhenPresent(sncMode);
 
             var param = connectionUri.Query.ParseQueryString();
 
@@ -341,7 +341,7 @@ namespace NwRfcNet
                 throw new NotSupportedException($"The given connection type '{connectionUri.Host}' is not supported yet.");
             }
 
-            this.FromNamedValues(param);
+            FromNamedValues(param);
             return this;
         }
 
@@ -367,7 +367,7 @@ namespace NwRfcNet
             {
                 collection.Add(kvp.Key, kvp.Value);
             }
-            return this.FromNameValueCollection(collection);
+            return FromNameValueCollection(collection);
         }
 
         /// <summary>
@@ -377,7 +377,7 @@ namespace NwRfcNet
         /// <returns>The connection parameter builder.</returns>
         public RfcConnectionParameterBuilder FromNameValueCollection(NameValueCollection connectionParameters)
         {
-            this.FromNamedValues(connectionParameters);
+            FromNamedValues(connectionParameters);
             return this;
         }
 
@@ -398,16 +398,16 @@ namespace NwRfcNet
             {
                 collection.Add(kvp.Key, kvp.Value);
             }
-            return this.FromNameValueCollection(collection);
+            return FromNameValueCollection(collection);
         }
 
         private RfcConnectionParameterBuilder SetParameter(string key, string value)
         {
-            this.parameters.SetParameter(key, value);
+            parameters.SetParameter(key, value);
             return this;
         }
 
-        private void SetWhenPresent(string value, Action<string> setAction)
+        private static void SetWhenPresent(string value, Action<string> setAction)
         {
             if (!string.IsNullOrEmpty(value))
             {
@@ -415,7 +415,7 @@ namespace NwRfcNet
             }
         }
 
-        private string GetAndRemoveWhenPresent(ref NameValueCollection source, IEnumerable<string> aliases)
+        private static string GetAndRemoveWhenPresent(ref NameValueCollection source, IEnumerable<string> aliases)
         {
             string foundItem = null;
             foreach (var alias in aliases)
@@ -430,7 +430,7 @@ namespace NwRfcNet
             return foundItem;
         }
 
-        private string GetWhenPresent(IDictionary<string, string> source, IEnumerable<string> aliases)
+        private static string GetWhenPresent(IDictionary<string, string> source, IEnumerable<string> aliases)
         {
             foreach (var alias in aliases)
             {
@@ -442,7 +442,7 @@ namespace NwRfcNet
             return null;
         }
 
-        private string GetUnescapedWhenPresent(string value)
+        private static string GetUnescapedWhenPresent(string value)
         {
             return (value != null) ? Uri.UnescapeDataString(value) : value;
         }
@@ -463,52 +463,52 @@ namespace NwRfcNet
           string sncPartner,
           string sncLib)
         {
-            this.SetWhenPresent(userName, val => this.UseLogonUserName(val));
-            this.SetWhenPresent(password, val => this.UseLogonPassword(val));
-            this.SetWhenPresent(host, val => this.UseConnectionHost(val));
-            this.SetWhenPresent(language, val => this.UseLogonLanguage(val));
-            this.SetWhenPresent(client, val => this.UseLogonClient(val));
-            this.SetWhenPresent(systemNumber, val => this.UseSystemNumber(val));
-            this.SetWhenPresent(systemId, val => this.UseSystemId(val));
-            this.SetWhenPresent(trace, val => this.UseTrace(val));
-            this.SetWhenPresent(poolSize, val => this.UseConnectionPooling(int.Parse(poolSize)));
-            this.SetWhenPresent(saprouter, val => this.UseSapRouter(val));
-            this.SetWhenPresent(sncMode, val => this.UseSecureNetworkCommunicationMode(val));
-            this.SetWhenPresent(sncQop, val => this.UseSecureNetworkCommunicationQop(val));
-            this.SetWhenPresent(sncMyName, val => this.UseSecureNetworkCommunicationMyName(val));
-            this.SetWhenPresent(sncPartner, val => this.UseSecureNetworkCommunicationPartner(val));
-            this.SetWhenPresent(sncLib, val => this.UseSecureNetworkCommunicationLibrary(val));
+            SetWhenPresent(userName, val => UseLogonUserName(val));
+            SetWhenPresent(password, val => UseLogonPassword(val));
+            SetWhenPresent(host, val => UseConnectionHost(val));
+            SetWhenPresent(language, val => UseLogonLanguage(val));
+            SetWhenPresent(client, val => UseLogonClient(val));
+            SetWhenPresent(systemNumber, val => UseSystemNumber(val));
+            SetWhenPresent(systemId, val => UseSystemId(val));
+            SetWhenPresent(trace, val => UseTrace(val));
+            SetWhenPresent(poolSize, val => UseConnectionPooling(int.Parse(poolSize)));
+            SetWhenPresent(saprouter, val => UseSapRouter(val));
+            SetWhenPresent(sncMode, val => UseSecureNetworkCommunicationMode(val));
+            SetWhenPresent(sncQop, val => UseSecureNetworkCommunicationQop(val));
+            SetWhenPresent(sncMyName, val => UseSecureNetworkCommunicationMyName(val));
+            SetWhenPresent(sncPartner, val => UseSecureNetworkCommunicationPartner(val));
+            SetWhenPresent(sncLib, val => UseSecureNetworkCommunicationLibrary(val));
         }
 
         private void FromNamedValues(NameValueCollection param)
         {
             var localCopy = new NameValueCollection(param);
 
-            var userName = this.GetAndRemoveWhenPresent(ref localCopy, UserNameKeyAliases);
-            var password = this.GetAndRemoveWhenPresent(ref localCopy, PasswordKeyAliases);
-            var host = this.GetAndRemoveWhenPresent(ref localCopy, TargetHostKeyAliases);
-            var language = this.GetAndRemoveWhenPresent(ref localCopy, LogonLanguageKeyAliases);
-            var client = this.GetAndRemoveWhenPresent(ref localCopy, LogonClientKeyAliases);
-            var systemNumber = this.GetAndRemoveWhenPresent(ref localCopy, SystemNumberKeyAliases);
-            var systemId = this.GetAndRemoveWhenPresent(ref localCopy, SystemIdKeyAliases);
-            var trace = this.GetAndRemoveWhenPresent(ref localCopy, TraceKeyAliases);
-            var poolSize = this.GetAndRemoveWhenPresent(ref localCopy, PoolSizeKeyAliases);
-            var saprouter = this.GetAndRemoveWhenPresent(ref localCopy, SapRouterKeyAliases);
+            var userName = GetAndRemoveWhenPresent(ref localCopy, UserNameKeyAliases);
+            var password = GetAndRemoveWhenPresent(ref localCopy, PasswordKeyAliases);
+            var host = GetAndRemoveWhenPresent(ref localCopy, TargetHostKeyAliases);
+            var language = GetAndRemoveWhenPresent(ref localCopy, LogonLanguageKeyAliases);
+            var client = GetAndRemoveWhenPresent(ref localCopy, LogonClientKeyAliases);
+            var systemNumber = GetAndRemoveWhenPresent(ref localCopy, SystemNumberKeyAliases);
+            var systemId = GetAndRemoveWhenPresent(ref localCopy, SystemIdKeyAliases);
+            var trace = GetAndRemoveWhenPresent(ref localCopy, TraceKeyAliases);
+            var poolSize = GetAndRemoveWhenPresent(ref localCopy, PoolSizeKeyAliases);
+            var saprouter = GetAndRemoveWhenPresent(ref localCopy, SapRouterKeyAliases);
 
-            var sncMode = this.GetAndRemoveWhenPresent(ref localCopy, SncModeKeyAliases);
-            var sncQop = this.GetAndRemoveWhenPresent(ref localCopy, SncQopKeyAliases);
-            var sncMyName = this.GetAndRemoveWhenPresent(ref localCopy, SncMyNameKeyAliases);
-            var sncPartner = this.GetAndRemoveWhenPresent(ref localCopy, SncPartnerKeyAliases);
-            var sncLib = this.GetAndRemoveWhenPresent(ref localCopy, SncLibKeyAliases);
+            var sncMode = GetAndRemoveWhenPresent(ref localCopy, SncModeKeyAliases);
+            var sncQop = GetAndRemoveWhenPresent(ref localCopy, SncQopKeyAliases);
+            var sncMyName = GetAndRemoveWhenPresent(ref localCopy, SncMyNameKeyAliases);
+            var sncPartner = GetAndRemoveWhenPresent(ref localCopy, SncPartnerKeyAliases);
+            var sncLib = GetAndRemoveWhenPresent(ref localCopy, SncLibKeyAliases);
 
-            this.FromValues(userName, password, host, language, client, systemNumber, systemId, trace, poolSize, saprouter, sncMode, sncQop, sncMyName, sncPartner, sncLib);
+            FromValues(userName, password, host, language, client, systemNumber, systemId, trace, poolSize, saprouter, sncMode, sncQop, sncMyName, sncPartner, sncLib);
 
             foreach (var additionalParameter in localCopy.AllKeys)
             {
-                this.parameters.SetParameter(additionalParameter, localCopy.Get(additionalParameter));
+                parameters.SetParameter(additionalParameter, localCopy.Get(additionalParameter));
             }
         }
 
-        internal RfcConnectionParameters Build() => this.parameters;
+        internal RfcConnectionParameters Build() => parameters;
     }
 }

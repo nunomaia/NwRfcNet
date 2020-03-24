@@ -26,7 +26,7 @@ namespace NwRfcNet
                 throw new ArgumentNullException(nameof(connectionParameters));
             }
 
-            this.options = new RfcConnectionParameterBuilder().FromDictionary(connectionParameters).Build();
+            options = new RfcConnectionParameterBuilder().FromDictionary(connectionParameters).Build();
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace NwRfcNet
                 throw new ArgumentNullException(nameof(connectionUri));
             }
 
-            this.options = new RfcConnectionParameterBuilder().FromConnectionUri(connectionUri).Build();
+            options = new RfcConnectionParameterBuilder().FromConnectionUri(connectionUri).Build();
         }
 
         /// <summary>
@@ -54,7 +54,9 @@ namespace NwRfcNet
                 throw new ArgumentNullException(nameof(connectionString));
             }
 
-            this.options = new RfcConnectionParameterBuilder().FromConnectionString(connectionString).Build();
+            options = new RfcConnectionParameterBuilder()
+                .FromConnectionString(connectionString)
+                .Build();
         }
 
         /// <summary>
@@ -70,7 +72,7 @@ namespace NwRfcNet
 
             var builderInstance = new RfcConnectionParameterBuilder();
             builder(builderInstance);
-            this.options = builderInstance.Build();
+            options = builderInstance.Build();
         }
 
         /// <summary>
@@ -84,7 +86,7 @@ namespace NwRfcNet
                 throw new ArgumentNullException(nameof(builder));
             }
 
-            this.options = builder.Build();
+            options = builder.Build();
         }
 
         /// <summary>
@@ -95,7 +97,7 @@ namespace NwRfcNet
         /// <summary>
         /// Gets the parameters used to create this connection.
         /// </summary>
-        public IReadOnlyDictionary<string, string> ConnectionParameters => this.options.Parameters;
+        public IReadOnlyDictionary<string, string> ConnectionParameters => options.Parameters;
 
         /// <summary>
         /// Gets or sets the mapper used during this connection.
@@ -107,10 +109,10 @@ namespace NwRfcNet
         /// </summary>
         public void Open()
         {
-            this.ThrowWhenConnectionIsOpen();
-            var parms = CreateInteropConnectionParameters(this.options.Parameters);
-            this.ConnectionHandle = RfcInterop.RfcOpenConnection(parms, (uint)parms.Length, out var errorInfo);
-            errorInfo.OnErrorThrowException(() => this.Clear());
+            ThrowWhenConnectionIsOpen();
+            var parms = CreateInteropConnectionParameters(options.Parameters);
+            ConnectionHandle = RfcInterop.RfcOpenConnection(parms, (uint)parms.Length, out var errorInfo);
+            errorInfo.OnErrorThrowException(() => Clear());
         }
 
         /// <summary>
@@ -120,7 +122,7 @@ namespace NwRfcNet
         /// <returns>The called function.</returns>
         public RfcFunction CallRfcFunction(string functionName)
         {
-            this.ThrowEhenConnectionIsClosed();
+            ThrowEhenConnectionIsClosed();
             return new RfcFunction(this, functionName);
         }
 
@@ -129,8 +131,8 @@ namespace NwRfcNet
         /// </summary>
         public bool Ping()
         {
-            this.ThrowEhenConnectionIsClosed();
-            return RfcInterop.RfcPing(this.ConnectionHandle, out _) == RfcInterop.RFC_RC.RFC_OK;
+            ThrowEhenConnectionIsClosed();
+            return RfcInterop.RfcPing(ConnectionHandle, out _) == RfcInterop.RFC_RC.RFC_OK;
         }
 
         /// <summary>
@@ -150,8 +152,8 @@ namespace NwRfcNet
         /// <param name="traceLevel">The trace level to use.</param>
         public void SetTraceLevel(string destination, TraceLevel traceLevel)
         {
-            this.ThrowEhenConnectionIsClosed();
-            var rc = RfcInterop.RfcSetTraceLevel(this.ConnectionHandle, destination, (uint)traceLevel, out var errorInfo);
+            ThrowEhenConnectionIsClosed();
+            var rc = RfcInterop.RfcSetTraceLevel(ConnectionHandle, destination, (uint)traceLevel, out var errorInfo);
             rc.OnErrorThrowException(errorInfo);
         }
 
@@ -160,41 +162,41 @@ namespace NwRfcNet
         /// </summary>
         public void Close()
         {
-            if (this.ConnectionHandle == IntPtr.Zero)
+            if (ConnectionHandle == IntPtr.Zero)
             {
                 return;
             }
-            RfcInterop.RfcCloseConnection(this.ConnectionHandle, out var errorInfo);
-            errorInfo.OnErrorThrowException(() => this.Clear());
-            this.Clear();
+            RfcInterop.RfcCloseConnection(ConnectionHandle, out var errorInfo);
+            errorInfo.OnErrorThrowException(() => Clear());
+            Clear();
         }
 
         private void Dispose(bool disposing)
         {
-            if (this.disposed)
+            if (disposed)
             {
                 return;
             }
 
             if (disposing)
             {
-                this.Close();
+                Close();
             }
 
-            this.disposed = true;
+            disposed = true;
         }
 
         /// <summary>
         /// Disposes the connection. Disposing automatically closes the connection.
         /// </summary>
-        public void Dispose() => this.Dispose(true);
+        public void Dispose() => Dispose(true);
 
-        private void Clear() => this.ConnectionHandle = IntPtr.Zero;
+        private void Clear() => ConnectionHandle = IntPtr.Zero;
 
         private void ThrowWhenConnectionIsOpen()
         {
-            this.ThrowWhenAlreadyDisposed();
-            if (this.ConnectionHandle != IntPtr.Zero)
+            ThrowWhenAlreadyDisposed();
+            if (ConnectionHandle != IntPtr.Zero)
             {
                 throw new InvalidOperationException("Connection is open");
             }
@@ -202,8 +204,8 @@ namespace NwRfcNet
 
         private void ThrowEhenConnectionIsClosed()
         {
-            this.ThrowWhenAlreadyDisposed();
-            if (this.ConnectionHandle == IntPtr.Zero)
+            ThrowWhenAlreadyDisposed();
+            if (ConnectionHandle == IntPtr.Zero)
             {
                 throw new InvalidOperationException("Connection is closed");
             }
@@ -211,7 +213,7 @@ namespace NwRfcNet
 
         private void ThrowWhenAlreadyDisposed()
         {
-            if (this.disposed)
+            if (disposed)
             {
                 throw new ObjectDisposedException(typeof(RfcConnection).Name);
             }
