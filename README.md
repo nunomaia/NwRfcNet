@@ -79,7 +79,7 @@ Open a connection to server and invoke a BAPI
 or 
 
 ```C#
-    using (var conn = new RfcConnection("Server=hostname;lang=en;user=username;pwd=secret"))
+    using (var conn = new RfcConnection(`"Server=hostname;lang=en;user=username;pwd=secret`"))
     {
         conn.Open();
         using(var func = _conn.CallRfcFunction("BAPI_COMPANYCODE_GETLIST"))
