@@ -16,11 +16,11 @@ namespace NwRfcNet
                 return;
 
             cleanction?.Invoke();
-            throw new RfcException(errorInfo.Message);
+            throw new RfcException(errorInfo);
         }
 
         /// <summary>
-        /// Check if RFC_RC has errors. 
+        /// Check if RFC_RC has errors.
         /// </summary>
         /// <param name="rfcRc"></param>
         /// <param name="errorInfo"></param>
@@ -31,7 +31,7 @@ namespace NwRfcNet
                 return;
 
             cleanction?.Invoke();
-            throw new RfcException(errorInfo.Message);
+            throw new RfcException(errorInfo);
         }
     }
 }
