@@ -104,7 +104,7 @@ namespace NwRfcNet
         }
 
         public TResult GetOutputParameters<TResult>() => 
-            (TResult)new RfcParameterOutput(_rfcConnection.Mapper)
+            (TResult)new RfcParameterOutput(Mapper ?? _rfcConnection.Mapper)
                 .GetReturnParameters(FunctionHandle, typeof(TResult));
 
         /// <summary>
