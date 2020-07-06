@@ -34,5 +34,14 @@ namespace NwRfcNet.TypeMapper
         /// </summary>
         public int Length { get; internal set; }
 
+        /// <summary>
+        /// Defines padding character for character type fields
+        /// </summary>
+        public char PaddingCharacter { get; internal set; } = ' ';
+
+        /// <summary>
+        /// Defines padding for character type fields
+        /// </summary>
+        public StringAlignment Alignment { get; internal set; } = StringAlignment.Right;
     }
 }

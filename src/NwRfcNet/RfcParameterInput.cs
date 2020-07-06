@@ -104,9 +104,23 @@ namespace NwRfcNet
                 return;
 
             char[] buffer = new char[map.Length];
-            charValue.CopyTo(0, buffer, 0, charValue.Length);
-            for (int i = charValue.Length; i < buffer.Length; i++)
-                buffer[i] = ' ';
+
+            //Truncate long string
+            if (charValue.Length > map.Length)
+                charValue = charValue.Substring(0, map.Length);
+
+            switch (map.Alignment)
+            {
+                case StringAlignment.None:
+                    charValue.CopyTo(0, buffer, 0, charValue.Length);
+                    break;
+                case StringAlignment.Left:
+                    charValue.PadRight(map.Length, map.PaddingCharacter).CopyTo(0, buffer, 0, buffer.Length);
+                    break;
+                case StringAlignment.Right:
+                    charValue.PadLeft(map.Length, map.PaddingCharacter).CopyTo(0, buffer, 0, buffer.Length);
+                    break;
+            }
 
             var rc = RfcInterop.RfcSetChars(dataHandle, map.RfcParameterName, buffer, (uint)map.Length, out var errorInfo);
             rc.OnErrorThrowException(errorInfo);
