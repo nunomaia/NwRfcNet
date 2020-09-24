@@ -65,11 +65,11 @@ Open a connection to server and invoke a BAPI
     using (var conn = new RfcConnection(builder => builder
         .UseConnectionHost("hostname")
         .UseLogonUserName("user")
-        .UseLogonPassword("password)
+        .UseLogonPassword("password")
         .UseLogonClient("cln")))
     {
         conn.Open();
-        using(var func = _conn.CallRfcFunction("BAPI_COMPANYCODE_GETLIST"))
+        using(var func = conn.CallRfcFunction("BAPI_COMPANYCODE_GETLIST"))
         {
             func.Invoke();
         }
