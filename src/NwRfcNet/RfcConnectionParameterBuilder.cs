@@ -184,12 +184,12 @@ namespace NwRfcNet
         /// <returns>The connection parameter builder.</returns>
         public RfcConnectionParameterBuilder UseSecureNetworkCommunicationMode(string sncMode, string key = RfcConnectionParameters.DefaultSncModeParameterKey)
         {
-            if (int.TryParse(sncMode, out var parsed) && (parsed == 0 || parsed == 1))
+            if (int.TryParse(sncMode, out var parsed) == false || (parsed != 0 && parsed != 1))
             {
-                SetParameter(key, parsed.ToString());
+                throw new ArgumentException(paramName: nameof(sncMode), message: "The only permitted values for the snc-mode are: '0' for SNC-Disabled or'1' for SNC-Enabled.");                
             }
 
-            throw new ArgumentException(paramName: nameof(sncMode), message: "The only permitted values for the snc-mode are: '0' for SNC-Disabled or'1' for SNC-Enabled.");
+            return SetParameter(key, parsed.ToString());
         }
 
         /// <summary>
