@@ -76,5 +76,31 @@ namespace NwRfcNet.Tests
             var builder = new RfcConnectionParameterBuilder();
             Assert.Throws<ArgumentException>(() => builder.UseSecureNetworkCommunicationMode(invalidSncMode));
         }
+
+        [Theory]
+        [InlineData("1")]
+        [InlineData("2")]
+        [InlineData("3")]
+        [InlineData("8")]
+        [InlineData("9")]
+        public void UseSecureNetworkCommunicationQop_ShouldStoreSncQop(string sncQop)
+        {
+            var builder = new RfcConnectionParameterBuilder()
+                .UseSecureNetworkCommunicationQop(sncQop);
+
+            var rfcParms = builder.Build().Parameters;
+            Assert.Equal(1, rfcParms.Count);
+            Assert.Contains(rfcParms, r => r.Key == "snc_qop" && r.Value == sncQop);
+        }
+
+        [Theory]
+        [InlineData("4")]
+        [InlineData("-1")]
+        [InlineData("test")]
+        public void UseSecureNetworkCommunicationQop_ShouldThrowArgumentException(string invalidSncQop)
+        {
+            var builder = new RfcConnectionParameterBuilder();
+            Assert.Throws<ArgumentException>(() => builder.UseSecureNetworkCommunicationQop(invalidSncQop));
+        }
     }
 }
