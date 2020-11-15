@@ -168,12 +168,12 @@ namespace NwRfcNet
         /// <returns>The connection parameter builder.</returns>
         public RfcConnectionParameterBuilder UseSecureNetworkCommunicationQop(string sncQop = "3", string key = RfcConnectionParameters.DefaultSncQopParameterKey)
         {
-            if (int.TryParse(sncQop, out var parsed) && (parsed == 1 || parsed == 2 || parsed == 3 || parsed == 8 || parsed == 9))
+            if (int.TryParse(sncQop, out var parsed) == false || (parsed != 1 && parsed != 2 && parsed != 3 && parsed != 8 && parsed != 9))
             {
-                SetParameter(key, parsed.ToString());
+                throw new ArgumentException(paramName: nameof(sncQop), message: "The only permitted values for the quality of protection are: '1','2','3','8','9'.");
             }
 
-            throw new ArgumentException(paramName: nameof(sncQop), message: "The only permitted values for the quality of protection are: '1','2','3','8','9'.");
+            return SetParameter(key, parsed.ToString());
         }
 
         /// <summary>
@@ -184,12 +184,12 @@ namespace NwRfcNet
         /// <returns>The connection parameter builder.</returns>
         public RfcConnectionParameterBuilder UseSecureNetworkCommunicationMode(string sncMode, string key = RfcConnectionParameters.DefaultSncModeParameterKey)
         {
-            if (int.TryParse(sncMode, out var parsed) && (parsed == 0 || parsed == 1))
+            if (int.TryParse(sncMode, out var parsed) == false || (parsed != 0 && parsed != 1))
             {
-                SetParameter(key, parsed.ToString());
+                throw new ArgumentException(paramName: nameof(sncMode), message: "The only permitted values for the snc-mode are: '0' for SNC-Disabled or'1' for SNC-Enabled.");                
             }
 
-            throw new ArgumentException(paramName: nameof(sncMode), message: "The only permitted values for the snc-mode are: '0' for SNC-Disabled or'1' for SNC-Enabled.");
+            return SetParameter(key, parsed.ToString());
         }
 
         /// <summary>

@@ -52,5 +52,55 @@ namespace NwRfcNet.Tests
             Assert.Contains(rfcParms, r => r.Key == "client" && r.Value == "001");
             Assert.Contains(rfcParms, r => r.Key == "trace" && r.Value == "1");
         }
+
+        [Theory]
+        [InlineData("1")]
+        [InlineData("0")]
+        public void UseSecureNetworkCommunicationMode_ShouldStoreSncMode(string sncMode)
+        {
+            var builder = new RfcConnectionParameterBuilder()
+                .UseSecureNetworkCommunicationMode(sncMode);
+
+            var rfcParms = builder.Build().Parameters;
+            Assert.Equal(1, rfcParms.Count);
+            Assert.Contains(rfcParms, r => r.Key == "snc_mode" && r.Value == sncMode);
+        }
+
+        [Theory]
+        [InlineData("2")]
+        [InlineData("-1")]
+        [InlineData("324234")]
+        [InlineData("test")]
+        public void UseSecureNetworkCommunicationMode_ShouldThrowArgumentException(string invalidSncMode)
+        {
+            var builder = new RfcConnectionParameterBuilder();
+            Assert.Throws<ArgumentException>(() => builder.UseSecureNetworkCommunicationMode(invalidSncMode));
+        }
+
+        [Theory]
+        [InlineData("1")]
+        [InlineData("2")]
+        [InlineData("3")]
+        [InlineData("8")]
+        [InlineData("9")]
+        public void UseSecureNetworkCommunicationQop_ShouldStoreSncQop(string sncQop)
+        {
+            var builder = new RfcConnectionParameterBuilder()
+                .UseSecureNetworkCommunicationQop(sncQop);
+
+            var rfcParms = builder.Build().Parameters;
+            Assert.Equal(1, rfcParms.Count);
+            Assert.Contains(rfcParms, r => r.Key == "snc_qop" && r.Value == sncQop);
+        }
+
+        [Theory]
+        [InlineData("4")]
+        [InlineData("-1")]
+        [InlineData("test")]
+        public void UseSecureNetworkCommunicationQop_ShouldThrowArgumentException(string invalidSncQop)
+        {
+            var builder = new RfcConnectionParameterBuilder();
+            Assert.Throws<ArgumentException>(() => builder.UseSecureNetworkCommunicationQop(invalidSncQop));
+        }
     }
 }
