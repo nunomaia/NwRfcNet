@@ -122,7 +122,7 @@ namespace NwRfcNet
         /// <returns>The called function.</returns>
         public RfcFunction CallRfcFunction(string functionName)
         {
-            ThrowEhenConnectionIsClosed();
+            ThrowWhenConnectionIsClosed();
             return new RfcFunction(this, functionName);
         }
 
@@ -131,7 +131,7 @@ namespace NwRfcNet
         /// </summary>
         public bool Ping()
         {
-            ThrowEhenConnectionIsClosed();
+            ThrowWhenConnectionIsClosed();
             return RfcInterop.RfcPing(ConnectionHandle, out _) == RfcInterop.RFC_RC.RFC_OK;
         }
 
@@ -152,7 +152,7 @@ namespace NwRfcNet
         /// <param name="traceLevel">The trace level to use.</param>
         public void SetTraceLevel(string destination, TraceLevel traceLevel)
         {
-            ThrowEhenConnectionIsClosed();
+            ThrowWhenConnectionIsClosed();
             var rc = RfcInterop.RfcSetTraceLevel(ConnectionHandle, destination, (uint)traceLevel, out var errorInfo);
             rc.OnErrorThrowException(errorInfo);
         }
@@ -202,7 +202,7 @@ namespace NwRfcNet
             }
         }
 
-        private void ThrowEhenConnectionIsClosed()
+        private void ThrowWhenConnectionIsClosed()
         {
             ThrowWhenAlreadyDisposed();
             if (ConnectionHandle == IntPtr.Zero)
