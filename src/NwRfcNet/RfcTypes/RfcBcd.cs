@@ -5,11 +5,21 @@ namespace NwRfcNet.RfcTypes
 {
     public class RfcBcd : IRfcType<decimal>
     {
+        private readonly CultureInfo _cultureInfo;
+
         #region Constructors
 
-        public RfcBcd(decimal value) => RfcValue = value;
+        public RfcBcd(decimal value, CultureInfo cultureInfo = null)
+        {
+            this._cultureInfo = cultureInfo ?? CultureInfo.InvariantCulture;
+            this.RfcValue = value;
+        }
 
-        public RfcBcd(string value) => RfcValue = decimal.Parse(value, CultureInfo.InvariantCulture);
+        public RfcBcd(string value, CultureInfo cultureInfo = null)
+        {
+            this._cultureInfo = cultureInfo ?? CultureInfo.InvariantCulture;
+            this.RfcValue = decimal.Parse(value, this._cultureInfo);
+        }
 
         #endregion
 
@@ -19,7 +29,7 @@ namespace NwRfcNet.RfcTypes
 
         #endregion
 
-        public override string ToString() => RfcValue.ToString(CultureInfo.InvariantCulture);
+        public override string ToString() => RfcValue.ToString(this._cultureInfo);
 
         #region Interop
 
@@ -45,6 +55,6 @@ namespace NwRfcNet.RfcTypes
             var str = RfcString.GetFieldValue(dataHandle, name);
             return new RfcBcd(str.RfcValue);
         }
-        #endregion        
+        #endregion
     }
 }

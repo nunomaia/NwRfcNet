@@ -1,6 +1,7 @@
 ﻿using NwRfcNet.Interop;
 using NwRfcNet.TypeMapper;
 using System;
+using System.Globalization;
 
 namespace NwRfcNet
 {
@@ -77,7 +78,7 @@ namespace NwRfcNet
         /// </summary>
         /// <typeparam name="TResult"></typeparam>
         /// <returns></returns>
-        public void Invoke() => Invoke<object>(null);
+        public void Invoke(CultureInfo cultureInfo = null) => Invoke<object>(null, cultureInfo);
 
         /// <summary>
         /// Invoke current function
@@ -85,7 +86,7 @@ namespace NwRfcNet
         /// <typeparam name="T"></typeparam>
         /// <typeparam name="TResult"></typeparam>
         /// <returns></returns>
-        public void Invoke<T>(T input)
+        public void Invoke<T>(T input, CultureInfo cultureInfo = null)
         {
             _functionDescHandle = RfcInterop.RfcGetFunctionDesc(_rfcConnection.ConnectionHandle, FunctionName, out var errorInfo);
             errorInfo.OnErrorThrowException(() => Clear());
@@ -95,7 +96,7 @@ namespace NwRfcNet
 
             if (input != null)
             {
-                var inParam = new RfcParameterInput(Mapper ?? _rfcConnection.Mapper);
+                var inParam = new RfcParameterInput(Mapper ?? _rfcConnection.Mapper, cultureInfo ?? CultureInfo.InvariantCulture);
                 inParam.SetParameters(FunctionHandle, input);
             }
 

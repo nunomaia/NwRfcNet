@@ -1,6 +1,7 @@
 ﻿using NwRfcNet.RfcTypes;
 using System;
 using Xunit;
+using System.Globalization;
 
 namespace NwRfcNet.Tests
 {
@@ -17,7 +18,7 @@ namespace NwRfcNet.Tests
         }
 
         [Fact]
-        public void RfcDateTest_2() => 
+        public void RfcDateTest_2() =>
             Assert.Throws<ArgumentException>(() => new RfcDate("2019092A"));
 
         [Fact]
@@ -55,6 +56,20 @@ namespace NwRfcNet.Tests
         {
             var bcd = new RfcBcd(140423.2101M);
             Assert.Equal("140423.2101", bcd.ToString());
+        }
+
+        [Fact]
+        public void RfcBcd_3()
+        {
+            var bcd = new RfcBcd("140423,2101", new CultureInfo("de-DE"));
+            Assert.Equal(140423.2101M, bcd.RfcValue);
+        }
+
+        [Fact]
+        public void RfcBcd_4()
+        {
+            var bcd = new RfcBcd(140423.2101M, new CultureInfo("de-DE"));
+            Assert.Equal("140423,2101", bcd.ToString());
         }
     }
 }

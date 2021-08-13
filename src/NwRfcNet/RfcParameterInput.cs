@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Collections;
 using NwRfcNet.RfcTypes;
 using System.Text;
+using System.Globalization;
 
 namespace NwRfcNet
 {
@@ -14,9 +15,13 @@ namespace NwRfcNet
     internal class RfcParameterInput : RfcParameter
     {
         private readonly RfcMapper _mapper;
+        private readonly CultureInfo _cultureInfo;
 
-        internal RfcParameterInput(RfcMapper mapper) =>
+        internal RfcParameterInput(RfcMapper mapper, CultureInfo cultureInfo = null)
+        {
+            _cultureInfo = cultureInfo ?? CultureInfo.InvariantCulture;
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+        }
 
         internal void SetParameters(IntPtr handler, object inputValue)
         {
@@ -79,7 +84,7 @@ namespace NwRfcNet
                     case RfcFieldType.Bcd:
                         if (propValue != null)
                         {
-                            var bcd = new RfcBcd((decimal)propValue);
+                            var bcd = new RfcBcd((decimal)propValue, _cultureInfo);
                             bcd.SetFieldValue(handler, propMap.Value.RfcParameterName);
                         }
                         break;
